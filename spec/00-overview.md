@@ -24,15 +24,15 @@ The bolt-ons — SPF, DKIM, DMARC, ARC, BIMI, MTA-STS, TLS-RPT, List-Unsubscribe
 
 ## Core commitments
 
-| | |
-|---|---|
-| **Identity is portable** | A long-lived keypair published as `did:mail`, with a KERI-style signed rotation log. Your address survives any provider change the way a phone number survives a carrier change. |
-| **Content is end-to-end encrypted** | MLS groups, per-message deniability / non-repudiation choice, post-quantum hybrid by default. |
-| **Legal proof is native and tiered** | Casual / Signed / Registered, mapping to eIDAS ERDS and QERDS, with OpenTimestamps Bitcoin anchoring for zero-cost long-term verification. |
-| **Providers are dumb encrypted mailboxes** | Store envelopes, not conversations. Never read content. Never own conversation state. |
-| **Rich content is typed, signed, schema-validated blocks** | Not HTML tables. Deterministic rendering, native accessibility, render-capability negotiation. |
-| **Anti-spam is economic and cryptographic** | Verified sender identity, proof-of-work, refundable bonds, recipient-controlled policy — not AI-beats-AI content classification. |
-| **SMTP interop is bidirectional and labeled honestly** | `bridged · encrypted`, `email`, and `Registered` chips make provenance visible at a glance. |
+| Commitment                                              | Detail                                                                                                                                                              |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Identity is portable**                                | A long-lived keypair published as `did:mail`, with a KERI-style signed rotation log. Your address survives any provider change the way a phone number survives a carrier change. |
+| **Content is end-to-end encrypted**                     | MLS groups, per-message deniability / non-repudiation choice, post-quantum hybrid by default.                                                                        |
+| **Legal proof is native and tiered**                    | Casual / Signed / Registered, mapping to eIDAS ERDS and QERDS, with OpenTimestamps Bitcoin anchoring for zero-cost long-term verification.                          |
+| **Providers are dumb encrypted mailboxes**              | Store envelopes, not conversations. Never read content. Never own conversation state.                                                                                |
+| **Rich content is typed, signed, schema-validated blocks** | Not HTML tables. Deterministic rendering, native accessibility, render-capability negotiation.                                                                   |
+| **Anti-spam is economic and cryptographic**             | Verified sender identity, proof-of-work, refundable bonds, recipient-controlled policy — not AI-beats-AI content classification.                                    |
+| **SMTP interop is bidirectional and labeled honestly**  | `bridged · encrypted`, `email`, and `Registered` chips make provenance visible at a glance.                                                                          |
 
 ## Reading paths
 

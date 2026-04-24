@@ -36,16 +36,16 @@ spec/
 
 ## Core commitments
 
-| | |
-|---|---|
-| **Identity** | Cryptographic and portable. `did:mail` with a KERI-style signed rotation log, owned by the user, not the provider. |
-| **Content** | Encrypted by default via MLS, with per-message deniability-vs-non-repudiation choice and post-quantum hybrid ciphers. |
-| **Legal proof** | Native and tiered. eIDAS 2.0 QERDS-conformant from day one, with OpenTimestamps Bitcoin anchoring for zero-cost long-term verification. |
-| **Providers** | Dumb encrypted mailboxes. Store envelopes, not conversations. Never read content. Never own conversation state. |
-| **Content** | Typed, signed, schema-validated block log. Not HTML tables. Deterministic rendering, native accessibility. |
-| **Anti-spam** | Economic and cryptographic. Content filtering has reached its ceiling against LLM-generated abuse. |
-| **Competition** | Providers compete on service, not lock-in. Portable identity forces it. |
-| **Transition** | Bidirectional SMTP bridge, opportunistic, clearly labeled, for 10–20 years. |
+| Commitment               | What Marque commits to                                                                                                                    |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| **Portable identity**    | Cryptographic and portable. `did:mail` with a KERI-style signed rotation log, owned by the user, not the provider.                         |
+| **End-to-end encryption**| Encrypted by default via MLS, with per-message deniability-vs-non-repudiation choice and post-quantum hybrid ciphers.                      |
+| **Legal proof**          | Native and tiered. eIDAS 2.0 QERDS-conformant from day one, with OpenTimestamps Bitcoin anchoring for zero-cost long-term verification.    |
+| **Commodity providers**  | Dumb encrypted mailboxes. Store envelopes, not conversations. Never read content. Never own conversation state.                            |
+| **Typed content**        | Typed, signed, schema-validated block log. Not HTML tables. Deterministic rendering, native accessibility.                                |
+| **Anti-spam**            | Economic and cryptographic. Content filtering has reached its ceiling against LLM-generated abuse.                                         |
+| **Fair competition**     | Providers compete on features, not address lock-in. Portable identity forces it.                                                           |
+| **SMTP interop**         | Bidirectional SMTP bridge, opportunistic, clearly labeled, for 10–20 years.                                                                |
 
 Marque is a composition of components that work in production today — Bluesky AT, MLS, Sigstore, OpenTimestamps, PEC, Hyperswarm, SimpleX, MIMI, FROST, Argon2id, BLAKE3, QUIC — wrapped in an opinionated architecture with firm red lines against on-chain content, per-message gas, wallet-only identity, single-provider capture, server-owned conversation state, and spec-optional extensions.
 
