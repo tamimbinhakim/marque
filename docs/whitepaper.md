@@ -86,31 +86,34 @@ The honest tradeoffs of the design, in one place:
 
 ## Who this is for
 
-**If you are a privacy-first mail provider (Proton, Tutanota, Fastmail, Mailbox.org, Posteo, Disroot, Migadu, or any equivalent outside the EU) looking for the next differentiator after E2EE**, Marque is the commodity-provider model your economics depend on, plus a legal-tier revenue stream that does not exist today.
+Two primary audiences. Everything else is a concrete form one of them takes.
 
-**If you are a Fortune 500 or regulated enterprise paying separately for DocuSign, certified mail, and secure-email gateways**, `core.signed_action` + Qualified tier + `.marquebox` archival collapses that stack into a single protocol.
+### 1. Anyone who wants an inbox no one can spy into
 
-**If you are running a healthcare system moving patient correspondence off fax and unencrypted email**, Marque's Qualified-tier provenance, deterministic content rendering, and hybrid-archive model maps onto US HIPAA, EU medical-records directives, and the UK NHS confidentiality framework. Doctor-patient messaging, imaging transfer, specialist referrals, and prescription correspondence all ride the same wire; retention is auditable at the provider level without exposing content.
+If you use email — and in 2026 that's effectively everyone — Marque is for you. The default is end-to-end encrypted mail where **your provider sees opaque ciphertext, not content**; your identity is a cryptographic object **you own**, not an address the provider rents; and **leaving a provider is an entry edit in your DID document**, not a loss of correspondence. No provider, no employer, no advertiser, and — at the stated threat model — no state-level adversary can read what you send or receive. That is the pitch for every individual user.
 
-**If you are a law firm or in-house legal team**, Attested-tier sender signatures preserve attorney-client privilege in the cryptographic record, `core.signed_action` replaces DocuSign for engagement letters and NDAs, Qualified tier carries legally-binding delivery receipts, and `.marquebox` produces a complete, cryptographically-verifiable eDiscovery export.
+The consumer story is not a side benefit; it is the foundation. A protocol that does not work for the one-person inbox does not end up in the enterprise, the hospital, the law firm, or the parliament. Marque starts at the individual and layers everything else on top of the same wire.
 
-**If you are a bank, insurer, or other regulated financial institution**, Qualified tier covers MiFID II / DORA correspondence obligations. Multi-currency refundable bonds deter stranger outreach without requiring an internal allowlist; bonded senders can reach a treasurer's inbox without a pre-existing relationship. Every signed instruction is non-repudiable, timestamped, and independently verifiable against Bitcoin anchoring.
+### 2. Governments and regulators that need to send proper legal mail
 
-**If you are a newsroom or an individual journalist**, Mixed privacy tier is the metadata-unlinkability path for source protection, and the `.marquebox` export is what you hand defence counsel if a source is subpoena'd. The full journalism-source-protection threat model is documented in [`spec/protocol/05-cryptography.md`](../spec/protocol/05-cryptography.md) (Mixed tier).
+Marque's Qualified tier carries [eIDAS 2.0](https://eur-lex.europa.eu/eli/reg/2024/1183/oj) QERDS-grade non-repudiation: cryptographic proof of sender, recipient, content, delivery, and time, independently verifiable — no trusted third party required — and archivable for decades. This is the successor substrate to Italy's PEC, France's LRE, Germany's (now-defunct) De-Mail, and the rest of the national electronic-registered-delivery systems: a standards-track, internationally-interoperable wire format instead of a patchwork of per-country silos.
 
-**If you are a principal investigator or IRB running human-subjects research**, Marque carries subject correspondence under Attested or Qualified tier with auditable non-delivery states — every message that did not reach a subject is logged with a machine-readable reason, which is a common audit finding under ICH E6(R3) and 45 CFR 46 that standard email cannot satisfy.
+Governments deploy it for citizen correspondence, tax notices, court summons, medical records, regulated notifications, and intra-administration mail. QTSPs operate it under existing trust-list accreditation. The EU Commission, drafting eIDAS 2.0 implementing acts through 2026–2027, gets an IETF-standards-track interoperability target to point a mandate at.
 
-**If you are an international NGO, a diaspora advocacy group, or an activist network operating in a hostile jurisdiction**, portable-tier identity (`did:mail:marque.id:...`) survives the loss of any single DNS domain, Mixed tier defeats metadata surveillance under the stated threat model, and refundable bonds filter adversarial stranger outreach without exposing the user to a denial-of-service purely via mailbox flooding.
+### Where these two audiences land in practice
 
-**If you are a defense, intelligence, or other classified-communications operator**, Marque's cryptographic-identity, tiered-proof, and metadata-tier model is compatible with cross-domain secure-messaging requirements; the protocol is explicitly designed to be deployed inside an air-gapped enclave with its own provider(s) and its own sovereign DID namespace.
+The verticals below are not separate audiences — they are where the "private inbox" and "legal mail" pitches arrive with specific requirements on top:
 
-**If you are a government or national regulator deploying citizen correspondence under eIDAS-scoped or equivalent regulation** — this covers Italy (post-PEC), France (LRE), Germany (post-De-Mail), Spain, the Nordics, and non-EU jurisdictions with analogous registered-delivery frameworks — Qualified tier is the right fit: sovereign-domain `did:mail`, national QTSP partnership, internationally-interoperable QERDS semantics rather than a per-country silo.
+- **Individuals, families, small businesses** — private correspondence, no provider spying, address that survives provider changes. The default Casual tier covers this.
+- **Healthcare** — doctor–patient messaging, imaging transfer, referrals, prescriptions under US HIPAA, EU medical-records directives, the UK NHS confidentiality framework. Qualified-tier provenance, deterministic content rendering, hybrid archive-of-record.
+- **Legal** — attorney–client privileged correspondence in the cryptographic record; `core.signed_action` as a DocuSign replacement; `.marquebox` as a complete eDiscovery export.
+- **Banking, insurance, finance** — MiFID II / DORA correspondence obligations, non-repudiable signed instructions, bonded stranger outreach.
+- **Journalism and human-rights work** — Mixed-tier metadata unlinkability for source protection; portable-tier identity that survives the loss of any single DNS domain; machine-readable rejection reasons instead of silent drops.
+- **Research and regulated administration** — human-subjects correspondence with auditable non-delivery states; provenance for every notice sent under ICH E6(R3), 45 CFR 46, or equivalent.
+- **Defense, intelligence, classified communications** — sovereign DID namespaces deployed inside air-gapped enclaves with their own provider(s); cryptographic identity + tiered proof + metadata tier compatible with cross-domain secure-messaging requirements.
+- **Mail providers and transactional-API services** — the commercial channels that ship the primary audiences a working Marque experience. Privacy-first providers get a post-E2EE differentiator; transactional-API services (Resend, Postmark, SendGrid, Mailgun, Loops, or equivalents) get the Phase-1 recipient-education beachhead where every cryptographic-receipt email teaches another inbox what Marque looks like.
 
-**If you are the EU Commission drafting eIDAS 2.0 implementing acts in 2026–2027**, Marque gives you an IETF-standards-track wire format to point an interoperability mandate at, rather than choosing between incompatible national QERDS implementations.
-
-**If you are a privacy researcher, journalist, lawyer, consultant, or clinician** who wants verified sender identity and registered-grade proof of delivery as a first-class feature, Marque is for you now — in Phase 1 — with rough edges.
-
-**If you are running a transactional email service (Resend, Postmark, SendGrid, Mailgun, Loops)**, the transactional-API beachhead is a productive Phase-1 adoption channel: every password-reset email delivered over Marque with a cryptographic receipt is a recipient-education event, and there's a real business reason to want that.
+Full vertical-by-vertical deployment considerations are documented in the supporting specification; this section exists to tell a reader which paragraph in the rest of the document is about their problem.
 
 ## What we are asking for
 
