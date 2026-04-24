@@ -120,6 +120,21 @@ Marque defines the wire protocol; Mailroom is one of many expected provider impl
 
 ---
 
+## Authorship and AI collaboration
+
+Marque — the specification, the Internet-Drafts, the schemas, the whitepaper, the eIDAS compliance mapping, the architecture diagrams, the MIP process, and the supporting prose — was researched and written by **Tamim Bin Hakim** in collaboration with **[Claude](https://claude.ai)** (Anthropic). The human is the author, architect, and decider; Claude was research partner, drafter, reviewer, and foil.
+
+We credit Claude plainly — in commit `Co-Authored-By:` footers, in Acknowledgments sections, and here — because:
+
+- A specification of this ambition is not research a single human completes in a reasonable window without capable tools. Using a capable AI is not a shortcut; it is how current work gets done.
+- Pretending a document was wholly human-written when it wasn't is dishonest, and hiding AI contribution to avoid reviewer bias is a form of reviewer manipulation.
+- Marque exists partly because of AI-created pressures on email (LLM-generated phishing, prompt injection into inbox assistants, AI-scale reputation-gating). Using an LLM to reason about the protocol that defends against those pressures is neither ironic nor contradictory — it is the honest division of labor.
+- Responsibility for every normative MUST and every regulatory citation remains the author's. Claude is acknowledged; Claude is not a co-editor of record.
+
+This convention is open to contributors who prefer to work without AI assistance and to those who prefer to credit their AI collaborator similarly. Either way, the `Co-Authored-By:` footer is the place to say so.
+
+---
+
 ## License
 
 Dual-licensed:
