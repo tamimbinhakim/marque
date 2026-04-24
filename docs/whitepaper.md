@@ -86,15 +86,11 @@ The honest tradeoffs of the design, in one place:
 
 ## Who this is for
 
-**If you are Italy's AgID, the Italian PEC successor you have been looking for.** PEC reaches **~16M active accounts moving ~2.5B messages/year** (AgID supervised-services report) on nationally-specific infrastructure; Marque Qualified tier provides the same QERDS semantics in a standards-track, internationally-interoperable form. Migration of PEC users onto `did:mail` is a natural Phase-2 wedge.
+**If you are a privacy-first mail provider (Proton, Tutanota, Fastmail, Mailbox.org, Posteo, Disroot, Migadu, or any equivalent outside the EU) looking for the next differentiator after E2EE**, Marque is the commodity-provider model your economics depend on, plus a legal-tier revenue stream that does not exist today.
 
-**If you are a privacy-first mail provider (Proton, Tutanota, Fastmail, Mailbox.org, Posteo, Disroot, Migadu) looking for the next differentiator after E2EE**, Marque is the commodity-provider model your economics depend on, plus a legal-tier revenue stream that does not exist today.
+**If you are a Fortune 500 or regulated enterprise paying separately for DocuSign, certified mail, and secure-email gateways**, `core.signed_action` + Qualified tier + `.marquebox` archival collapses that stack into a single protocol.
 
-**If you are a Fortune 500 or EU-regulated enterprise paying separately for DocuSign, certified mail, and secure-email gateways**, `core.signed_action` + Qualified tier + `.marquebox` archival collapses that stack into a single protocol.
-
-**If you are the EU Commission drafting eIDAS 2.0 implementing acts in 2026–2027**, Marque gives you an IETF-standards-track wire format to point an interoperability mandate at, rather than choosing between national QERDS implementations.
-
-**If you are a healthcare system moving patient correspondence off fax and unencrypted email**, Marque's Qualified-tier provenance, deterministic content rendering, and hybrid-archive model maps onto US HIPAA, EU medical-records directives, and the UK NHS confidentiality framework. Doctor-patient messaging, imaging transfer, specialist referrals, and prescription correspondence all ride the same wire; retention is auditable at the provider level without exposing content.
+**If you are running a healthcare system moving patient correspondence off fax and unencrypted email**, Marque's Qualified-tier provenance, deterministic content rendering, and hybrid-archive model maps onto US HIPAA, EU medical-records directives, and the UK NHS confidentiality framework. Doctor-patient messaging, imaging transfer, specialist referrals, and prescription correspondence all ride the same wire; retention is auditable at the provider level without exposing content.
 
 **If you are a law firm or in-house legal team**, Attested-tier sender signatures preserve attorney-client privilege in the cryptographic record, `core.signed_action` replaces DocuSign for engagement letters and NDAs, Qualified tier carries legally-binding delivery receipts, and `.marquebox` produces a complete, cryptographically-verifiable eDiscovery export.
 
@@ -106,13 +102,15 @@ The honest tradeoffs of the design, in one place:
 
 **If you are an international NGO, a diaspora advocacy group, or an activist network operating in a hostile jurisdiction**, portable-tier identity (`did:mail:marque.id:...`) survives the loss of any single DNS domain, Mixed tier defeats metadata surveillance under the stated threat model, and refundable bonds filter adversarial stranger outreach without exposing the user to a denial-of-service purely via mailbox flooding.
 
-**If you are a defense, intelligence, or other classified-communications operator**, Marque's cryptographic-identity, tiered-proof, and metadata-tier model is compatible with cross-domain secure-messaging requirements; the protocol is explicitly designed to be deployed inside an air-gapped enclave with its own provider(s) and its own `.marque.mil` (or national equivalent) DID namespace.
+**If you are a defense, intelligence, or other classified-communications operator**, Marque's cryptographic-identity, tiered-proof, and metadata-tier model is compatible with cross-domain secure-messaging requirements; the protocol is explicitly designed to be deployed inside an air-gapped enclave with its own provider(s) and its own sovereign DID namespace.
+
+**If you are a government or national regulator deploying citizen correspondence under eIDAS-scoped or equivalent regulation** — this covers Italy (post-PEC), France (LRE), Germany (post-De-Mail), Spain, the Nordics, and non-EU jurisdictions with analogous registered-delivery frameworks — Qualified tier is the right fit: sovereign-domain `did:mail`, national QTSP partnership, internationally-interoperable QERDS semantics rather than a per-country silo.
+
+**If you are the EU Commission drafting eIDAS 2.0 implementing acts in 2026–2027**, Marque gives you an IETF-standards-track wire format to point an interoperability mandate at, rather than choosing between incompatible national QERDS implementations.
 
 **If you are a privacy researcher, journalist, lawyer, consultant, or clinician** who wants verified sender identity and registered-grade proof of delivery as a first-class feature, Marque is for you now — in Phase 1 — with rough edges.
 
-**If you are a government or regulator deploying citizen correspondence under eIDAS-scoped regulation**, Qualified tier is the right fit: sovereign-domain `did:mail`, national QTSP partnership, PEC-style legal equivalence.
-
-**If you are running a transactional email service (Resend, Postmark, SendGrid)**, the transactional-API beachhead is a productive Phase-1 adoption channel: every password-reset email delivered over Marque with a cryptographic receipt is a recipient-education event, and there's a real business reason to want that.
+**If you are running a transactional email service (Resend, Postmark, SendGrid, Mailgun, Loops)**, the transactional-API beachhead is a productive Phase-1 adoption channel: every password-reset email delivered over Marque with a cryptographic receipt is a recipient-education event, and there's a real business reason to want that.
 
 ## What we are asking for
 
