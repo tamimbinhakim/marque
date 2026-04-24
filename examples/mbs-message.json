@@ -1,0 +1,86 @@
+{
+  "$comment": "Marque Block Spec example: the plaintext message payload only. This would be encrypted as the MLS AppMessage body inside an envelope.",
+  "mbs_version": "1",
+  "alt_plaintext": "Product Weekly — week of April 20\n\n- Roadmap review Tuesday\n- Please vote on the launch date poll\n- Register your reaction to the mock below",
+  "locales": ["en", "fr"],
+  "ai_instruction": false,
+  "blocks": [
+    {
+      "type": "core.text",
+      "id": "b1",
+      "content": {
+        "en": "# Product Weekly — week of April 20\n\nTwo items this week:",
+        "fr": "# Produit hebdo — semaine du 20 avril\n\nDeux points cette semaine :"
+      }
+    },
+    {
+      "type": "core.poll",
+      "id": "b2",
+      "question": {
+        "en": "Which launch date works?",
+        "fr": "Quelle date de lancement préférez-vous ?"
+      },
+      "options": [
+        { "id": "may-6", "label": { "en": "Wed May 6",   "fr": "Mer. 6 mai"   } },
+        { "id": "may-13", "label": { "en": "Wed May 13", "fr": "Mer. 13 mai"  } },
+        { "id": "may-20", "label": { "en": "Wed May 20", "fr": "Mer. 20 mai"  } }
+      ],
+      "allow_multi": false,
+      "close_at": "2026-04-26T23:59:00Z"
+    },
+    {
+      "type": "core.image",
+      "id": "b3",
+      "cid": "blake3:7a3f9c2e5b8d1a4f6c0b7e4d2a9f6c3b0a5e8d1c4f7a2b9e6d3c0b7a4f1e8d5c",
+      "mime": "image/png",
+      "a11y": {
+        "alt": {
+          "en": "Mock of the new pricing page, showing three tier cards",
+          "fr": "Maquette de la nouvelle page tarifaire avec trois cartes"
+        }
+      },
+      "width_px": 1600,
+      "height_px": 900,
+      "sources": [
+        "marque://example.com/blob/7a3f9c2e..."
+      ]
+    },
+    {
+      "type": "core.reaction",
+      "id": "b4",
+      "prompt": {
+        "en": "Quick reaction to the mock?",
+        "fr": "Réaction rapide à la maquette ?"
+      },
+      "allowed": ["👍", "👎", "🎉", "🤔"]
+    },
+    {
+      "type": "core.schedule",
+      "id": "b5",
+      "prompt": {
+        "en": "Pick a time for the roadmap review",
+        "fr": "Choisissez un créneau pour la revue de feuille de route"
+      },
+      "proposals": [
+        { "start": "2026-04-22T10:00:00-04:00", "duration_minutes": 45 },
+        { "start": "2026-04-22T14:00:00-04:00", "duration_minutes": 45 },
+        { "start": "2026-04-23T10:00:00-04:00", "duration_minutes": 45 }
+      ],
+      "timezone_hint": "America/New_York"
+    },
+    {
+      "type": "core.embed",
+      "id": "b6",
+      "url": "https://blog.example.com/2026/roadmap",
+      "consent_required": true,
+      "public_untrusted": true,
+      "fallback": {
+        "type": "core.text",
+        "content": {
+          "en": "Roadmap blog — https://blog.example.com/2026/roadmap",
+          "fr": "Blog de la roadmap — https://blog.example.com/2026/roadmap"
+        }
+      }
+    }
+  ]
+}

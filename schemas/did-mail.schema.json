@@ -1,0 +1,198 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://marqueproto.org/schemas/did-mail.schema.json",
+  "title": "did:mail DID Document",
+  "description": "A DID Document for a did:mail identity. Profile over did:web with mandatory KERI-style KEL.",
+  "type": "object",
+  "required": ["@context", "id", "verificationMethod", "service", "x-marque"],
+  "properties": {
+    "@context": {
+      "type": "array",
+      "minItems": 1,
+      "contains": { "const": "https://www.w3.org/ns/did/v1" }
+    },
+    "id": { "$ref": "./_defs/common.schema.json#/$defs/did_mail" },
+    "alsoKnownAs": {
+      "type": "array",
+      "items": { "type": "string", "format": "uri" }
+    },
+    "verificationMethod": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "controller"],
+        "properties": {
+          "id":         { "type": "string" },
+          "type": {
+            "type": "string",
+            "enum": ["Ed25519VerificationKey2020", "JsonWebKey2020", "Multikey"]
+          },
+          "controller":         { "type": "string" },
+          "publicKeyMultibase": { "type": "string" },
+          "publicKeyJwk":       { "type": "object" },
+          "x-marque": {
+            "type": "object",
+            "properties": {
+              "device":   { "type": "string", "examples": ["phone", "laptop", "tablet", "hardware-token"] },
+              "issuedBy": { "type": "string" },
+              "issuedAt": { "$ref": "./_defs/common.schema.json#/$defs/rfc3339_utc" },
+              "expires":  { "$ref": "./_defs/common.schema.json#/$defs/rfc3339_utc" },
+              "pqHybrid": {
+                "type": "object",
+                "properties": {
+                  "algorithm": { "type": "string", "examples": ["ML-DSA-65", "SLH-DSA-SHA2-128f"] },
+                  "publicKey": { "type": "string" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "authentication":        { "type": "array", "items": { "type": "string" } },
+    "keyAgreement":          { "type": "array", "items": { "type": "string" } },
+    "assertionMethod":       { "type": "array", "items": { "type": "string" } },
+    "capabilityInvocation":  { "type": "array", "items": { "type": "string" } },
+    "service": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "serviceEndpoint"],
+        "properties": {
+          "id":   { "type": "string" },
+          "type": {
+            "type": "string",
+            "enum": ["MarqueMailbox", "LegacySMTPBridge", "LegacyDelegation", "MarqueDirectoryReplica"]
+          },
+          "serviceEndpoint": {
+            "oneOf": [
+              { "type": "string", "format": "uri" },
+              { "type": "string", "pattern": "^mailto:" }
+            ]
+          },
+          "priority":      { "type": "integer", "minimum": 0 },
+          "retentionDays": { "type": "integer", "minimum": 1 }
+        }
+      }
+    },
+    "x-marque": {
+      "type": "object",
+      "required": ["kel", "nullificationWindowHours"],
+      "properties": {
+        "kel": {
+          "type": "object",
+          "required": ["endpoint", "latestEvent"],
+          "properties": {
+            "endpoint": { "type": "string", "format": "uri" },
+            "mirrors": {
+              "type": "array",
+              "description": "Additional KEL mirror URLs. All MUST serve the byte-identical KEL. Per §2a.5.",
+              "items": { "type": "string", "format": "uri" }
+            },
+            "latestEvent": {
+              "type": "object",
+              "required": ["seq", "hash", "timestamp"],
+              "properties": {
+                "seq":       { "type": "integer", "minimum": 0 },
+                "hash":      { "$ref": "./_defs/common.schema.json#/$defs/blake3_256" },
+                "timestamp": { "$ref": "./_defs/common.schema.json#/$defs/rfc3339_utc" }
+              }
+            }
+          }
+        },
+        "guardians": {
+          "type": "array",
+          "description": "Social recovery guardians per §2.5 and §2a.3.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label":  { "type": "string" },
+              "did":    { "$ref": "./_defs/common.schema.json#/$defs/did_mail" },
+              "type":   { "type": "string" },
+              "commit": { "type": "string" },
+              "weight": { "type": "integer", "minimum": 1 },
+              "is_home_provider": {
+                "type": "boolean",
+                "description": "True if this guardian is the user's home provider. Provider-as-guardian MUST NOT be the sole authorizer (§2a.3)."
+              }
+            }
+          }
+        },
+        "guardianThreshold": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 3,
+          "description": "Combined weight required for a guardian-initiated recovery. Per §2a.3, provider-alone recovery is invalid regardless of this threshold."
+        },
+        "nullificationWindowHours": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 72,
+          "description": "Bluesky-style window per §2.4."
+        },
+        "recoveryInProgress": {
+          "type": "object",
+          "description": "Present during an active recovery. Clients MUST surface a 'Recovery in progress' banner throughout the nullification window.",
+          "properties": {
+            "initiatedAt":      { "$ref": "./_defs/common.schema.json#/$defs/rfc3339_utc" },
+            "nullifiableUntil": { "$ref": "./_defs/common.schema.json#/$defs/rfc3339_utc" },
+            "candidateIRK":     { "type": "string" }
+          }
+        },
+        "capabilities": {
+          "type": "object",
+          "properties": {
+            "supportedSuites": { "type": "array", "items": { "type": "string" } },
+            "supportedBlocks": { "type": "array", "items": { "type": "string" } },
+            "padToBuckets": {
+              "type": "array",
+              "items": { "$ref": "./_defs/common.schema.json#/$defs/pad_bucket" }
+            }
+          }
+        },
+        "disposable": {
+          "type": "object",
+          "description": "Present on disposable-handle DIDs. Per §2a.8.",
+          "required": ["issued_by", "expires", "purpose"],
+          "properties": {
+            "issued_by": { "$ref": "./_defs/common.schema.json#/$defs/did_mail" },
+            "expires":   { "$ref": "./_defs/common.schema.json#/$defs/rfc3339_utc" },
+            "purpose":   { "type": "string" }
+          }
+        },
+        "room": {
+          "type": "object",
+          "description": "Present on Room DIDs per Part 4b. Omit for natural-person identities.",
+          "required": ["kind", "roster"],
+          "properties": {
+            "kind":   { "$ref": "./_defs/common.schema.json#/$defs/room_kind" },
+            "roster": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["did", "role"],
+                "properties": {
+                  "did":      { "$ref": "./_defs/common.schema.json#/$defs/did_mail" },
+                  "role":     { "$ref": "./_defs/common.schema.json#/$defs/room_role" },
+                  "weight":   { "type": "integer", "minimum": 1 },
+                  "scope":    { "type": "object" },
+                  "added":    { "$ref": "./_defs/common.schema.json#/$defs/rfc3339_utc" },
+                  "added_by": { "$ref": "./_defs/common.schema.json#/$defs/did_mail" }
+                }
+              }
+            },
+            "policy":     { "type": "object" },
+            "parent":     { "$ref": "./_defs/common.schema.json#/$defs/did_mail" },
+            "visibility": {
+              "type": "string",
+              "enum": ["public", "unlisted", "private"]
+            }
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": true
+}

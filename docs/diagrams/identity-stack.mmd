@@ -1,0 +1,31 @@
+%% Marque — identity stack
+%% Three-tier key hierarchy and the DID document that indexes it.
+%% Used in docs/architecture-overview.md §1.
+
+flowchart TB
+    DID["<b>DID Document</b><br/>did:mail:example.com:alice<br/><i>served at</i><br/>/.well-known/mail-did/alice/did.json"]
+
+    IRK["<b>Identity Root Key (IRK)</b><br/>— years —<br/>hardware / cold storage<br/>answers: <i>who is Alice?</i>"]
+
+    KEL["<b>KEL</b><br/>append-only<br/>signed rotation log<br/>(KERI-style)"]
+
+    DSK1["<b>DSK — phone</b><br/>— months —<br/>TPM / Secure Enclave"]
+    DSK2["<b>DSK — laptop</b><br/>— months —<br/>TPM / Secure Enclave"]
+
+    EPOCH["<b>MLS ratchet keys</b><br/>— per-epoch, ephemeral —<br/>forward-secret message encryption"]
+
+    DID -->|lists service endpoints,<br/>verificationMethods, x-marque| IRK
+    IRK -->|signs rotations| KEL
+    IRK -->|signs DSK certificate| DSK1
+    IRK -->|signs DSK certificate| DSK2
+    DSK1 -->|joins MLS group,<br/>signs per-epoch commits| EPOCH
+    DSK2 -->|joins MLS group,<br/>signs per-epoch commits| EPOCH
+
+    classDef root fill:#eef2ff,stroke:#4f46e5,stroke-width:2px;
+    classDef device fill:#fef3c7,stroke:#b45309,stroke-width:1px;
+    classDef epoch fill:#ecfdf5,stroke:#047857,stroke-width:1px;
+    class IRK root
+    class KEL root
+    class DSK1 device
+    class DSK2 device
+    class EPOCH epoch

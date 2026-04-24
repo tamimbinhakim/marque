@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://marqueproto.org/schemas/blocks/core.signed_action.schema.json",
+  "title": "MBS core.signed_action block",
+  "description": "Request for non-repudiable recipient acknowledgment. The DocuSign-replacement primitive. Per §7.2.2.",
+  "type": "object",
+  "required": ["type", "action_id", "prompt", "canonical_text"],
+  "properties": {
+    "type":      { "const": "core.signed_action" },
+    "id":        { "type": "string" },
+    "action_id": {
+      "type": "string",
+      "description": "Sender-assigned identifier unique within the thread."
+    },
+    "prompt": {
+      "description": "User-facing prompt (single-locale string or per-locale object).",
+      "oneOf": [
+        { "type": "string" },
+        {
+          "type": "object",
+          "patternProperties": {
+            "^[a-z]{2,3}(-[A-Za-z0-9]+)*$": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "canonical_text": {
+      "type": "string",
+      "description": "The exact text the recipient is asked to sign. MUST be shown verbatim in the recipient client. This is the bytes that enter the signed hash; court presentation references this field."
+    },
+    "canonical_text_hash": {
+      "$ref": "../_defs/common.schema.json#/$defs/blake3_256",
+      "description": "BLAKE3 of canonical_text. Redundant with canonical_text but enables hash-only verification after canonical_text is discarded."
+    },
+    "required_tier": {
+      "$ref": "../_defs/common.schema.json#/$defs/auth_mode",
+      "description": "Minimum tier required for the acknowledgment response. Typically SIGNED for casual agreements, QUALIFIED for legal commitments."
+    },
+    "expires": {
+      "$ref": "../_defs/common.schema.json#/$defs/rfc3339_utc",
+      "description": "Beyond this time the request is void; late acknowledgments are refused."
+    },
+    "additional_fields": {
+      "type": "object",
+      "description": "Optional structured data the sender wants to bind into the signed acknowledgment (contract parameters, amounts, counterparty, etc.)."
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,89 @@
+name: Commit messages
+
+# Enforces Conventional Commits on every pull request.
+# Configuration lives in .commitlintrc.yaml at the repo root.
+# Failures here block the PR; fix by amending the commit message.
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, edited]
+
+jobs:
+  commitlint:
+    name: Lint PR commits
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out PR head
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node (for @commitlint CLI)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install commitlint
+        run: |
+          npm install --no-save --no-package-lock \
+            @commitlint/cli@^19 \
+            @commitlint/config-conventional@^19
+
+      - name: Validate every commit in the PR range
+        run: |
+          npx commitlint \
+            --from "${{ github.event.pull_request.base.sha }}" \
+            --to   "${{ github.event.pull_request.head.sha }}" \
+            --verbose \
+            --config .commitlintrc.yaml
+
+  pr-title:
+    name: Lint PR title
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo (for config)
+        uses: actions/checkout@v4
+
+      - name: Validate PR title against Conventional Commits
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # Mirror the types allowed in .commitlintrc.yaml.
+          types: |
+            feat
+            add
+            change
+            update
+            fix
+            deprecate
+            remove
+            security
+            sec
+            perf
+            ref
+            cite
+            docs
+            doc
+            spec
+            draft
+            schema
+            mip
+            governance
+            refactor
+            test
+            ci
+            build
+            chore
+            style
+            revert
+          # Allow an optional scope (parenthesized), e.g. "fix(protocol/03): ...".
+          requireScope: false
+          # Subject sentence-case is enforced by commitlint; here we only
+          # check structure at the PR title level so GitHub UIs display
+          # the right type chip.
+          subjectPattern: ^(?![A-Z]).+$
+          subjectPatternError: |
+            The subject of the PR title should start with a lowercase
+            letter so it reads as an imperative verb phrase (e.g.
+            "fix protocol/03 typo", not "Fix Protocol/03 Typo").

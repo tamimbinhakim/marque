@@ -1,0 +1,27 @@
+# Editors
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Build artifacts
+/build/
+/dist/
+/out/
+node_modules/
+__pycache__/
+*.pyc
+
+# Local-only editor notes
+/.notes/
+/drafts/*.local.md
+
+# Generated HTML/PDF renders of the spec
+/rendered/
+*.pdf.tmp
+
+# Rendered Internet-Draft artifacts (only .md source is versioned)
+/drafts/*.xml
+/drafts/*.txt
+/drafts/*.html

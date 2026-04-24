@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://marqueproto.org/schemas/blocks/core.schedule.schema.json",
+  "title": "MBS core.schedule block",
+  "description": "The Calendly-replacement primitive: proposed time slots; recipient taps one; `.ics` flows back. Per §7.2.2.",
+  "type": "object",
+  "required": ["type", "proposals"],
+  "properties": {
+    "type": { "const": "core.schedule" },
+    "id":   { "type": "string" },
+    "prompt": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "object", "patternProperties": { "^[a-z]{2,3}(-[A-Za-z0-9]+)*$": { "type": "string" } } }
+      ]
+    },
+    "proposals": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["start", "duration_minutes"],
+        "properties": {
+          "start": {
+            "type": "string",
+            "format": "date-time",
+            "description": "RFC 3339 date-time with offset."
+          },
+          "duration_minutes": { "type": "integer", "minimum": 5 },
+          "location": { "type": "string" }
+        }
+      }
+    },
+    "timezone_hint":  { "type": "string", "description": "IANA tz name, e.g. \"America/New_York\"." },
+    "response_deadline": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}

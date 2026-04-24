@@ -1,0 +1,27 @@
+%% Marque — MIP lifecycle
+%% State transitions for a Marque Improvement Proposal.
+%% Used in mips/mip-0001-process.md and mips/README.md.
+
+stateDiagram-v2
+    [*] --> Idea
+    Idea --> Draft: open PR from<br/>mip-template.md
+    Draft --> Review: author declares<br/>feature-complete
+    Draft --> Withdrawn: author withdraws
+    Review --> LastCall: ≥ 21 days<br/>stable, no blockers
+    Review --> Withdrawn
+    Review --> Deferred: awaiting<br/>upstream dependency
+    LastCall --> Review: substantive<br/>objection
+    LastCall --> Final: ≥ 14 days<br/>no unresolved objection
+    LastCall --> Withdrawn
+    Deferred --> Review: dependency<br/>resolved
+    Final --> Superseded: replaced by<br/>later MIP
+
+    Withdrawn --> [*]
+    Superseded --> [*]
+    Final --> [*]
+
+    LastCall: Last Call
+    note right of Final
+        Final MIPs are immutable
+        except for typos and errata
+    end note

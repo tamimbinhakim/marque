@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://marqueproto.org/schemas/_defs/common.schema.json",
+  "title": "Marque shared definitions",
+  "description": "Common reusable schema fragments. Other schemas reference these via $ref.",
+  "$defs": {
+    "did_mail": {
+      "type": "string",
+      "pattern": "^did:mail:[A-Za-z0-9.\\-]+:[A-Za-z0-9_.\\-]+$",
+      "description": "A did:mail identifier per draft-tamim-marque-did-mail."
+    },
+    "blake3_256": {
+      "type": "string",
+      "pattern": "^blake3:[0-9a-f]{64}$",
+      "description": "BLAKE3-256 hex-encoded CID."
+    },
+    "hmac_sha256": {
+      "type": "string",
+      "pattern": "^hmac-sha256:[0-9a-f]{64}$"
+    },
+    "pad_bucket": {
+      "type": "string",
+      "enum": ["4KB", "16KB", "64KB", "256KB", "1MB", "4MB"]
+    },
+    "auth_mode": {
+      "type": "string",
+      "enum": ["CASUAL", "SIGNED", "QUALIFIED"]
+    },
+    "privacy_tier": {
+      "type": "string",
+      "enum": ["CASUAL", "SEALED", "MIXED"]
+    },
+    "forwardable": {
+      "type": "string",
+      "enum": ["no", "quoted_only", "attested", "qualified_only"]
+    },
+    "quotable": {
+      "type": "string",
+      "enum": ["no", "yes"]
+    },
+    "non_delivery_state": {
+      "type": "string",
+      "enum": [
+        "DELIVERED",
+        "STORED_FOR_RECIPIENT",
+        "STORED_BUT_UNFETCHED",
+        "REFUSED_TO_ACKNOWLEDGE",
+        "POLICY_REJECTED_BOND",
+        "POLICY_REJECTED_POW",
+        "POLICY_REJECTED_TIER",
+        "UNDELIVERABLE",
+        "DID_UNRESOLVABLE",
+        "DID_DEACTIVATED",
+        "RECIPIENT_PROVIDER_COMPROMISED",
+        "QTSP_UNAVAILABLE"
+      ]
+    },
+    "rfc3339_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "bcp47_locale": {
+      "type": "string",
+      "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]+)*$"
+    },
+    "room_kind": {
+      "type": "string",
+      "enum": ["shared", "team", "list", "delegation", "org"]
+    },
+    "room_role": {
+      "type": "string",
+      "enum": ["owner", "moderator", "member", "read-only", "assistant"]
+    }
+  }
+}

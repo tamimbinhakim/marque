@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://marqueproto.org/schemas/blocks/core.image.schema.json",
+  "title": "MBS core.image block",
+  "description": "Content-addressed image. No external URLs. a11y fields are REQUIRED per §7.2.1 axiom 2.",
+  "type": "object",
+  "required": ["type", "cid", "mime", "a11y"],
+  "properties": {
+    "type": { "const": "core.image" },
+    "id":   { "type": "string" },
+    "cid":  { "$ref": "../_defs/common.schema.json#/$defs/blake3_256" },
+    "mime": {
+      "type": "string",
+      "enum": [
+        "image/jpeg",
+        "image/png",
+        "image/webp",
+        "image/avif",
+        "image/gif",
+        "image/svg+xml"
+      ]
+    },
+    "width_px":  { "type": "integer", "minimum": 1 },
+    "height_px": { "type": "integer", "minimum": 1 },
+    "sources": {
+      "type": "array",
+      "items": { "type": "string", "format": "uri" },
+      "description": "Ordered source list per §7.4."
+    },
+    "a11y": {
+      "type": "object",
+      "description": "Accessibility metadata. REQUIRED. §7.2.1.",
+      "required": ["alt"],
+      "properties": {
+        "alt": {
+          "description": "Alt text. MUST be non-empty for informative images; MAY be empty string for decorative images when explicitly marked decorative=true.",
+          "oneOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "string", "maxLength": 0 }
+          ]
+        },
+        "decorative": {
+          "type": "boolean",
+          "description": "If true, the image is decorative; alt MAY be empty string.",
+          "default": false
+        },
+        "long_description_cid": {
+          "$ref": "../_defs/common.schema.json#/$defs/blake3_256",
+          "description": "Optional CID of a longer description text for complex images."
+        }
+      }
+    },
+    "placeholder": {
+      "type": "string",
+      "description": "BlurHash or thumbhash data for progressive rendering."
+    }
+  },
+  "additionalProperties": false
+}

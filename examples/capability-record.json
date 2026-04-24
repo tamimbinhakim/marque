@@ -1,0 +1,98 @@
+{
+  "$comment": "Served at https://<provider-domain>/.well-known/marque-provider.json",
+  "provider_version": "marque-provider/1",
+  "provider_did": "did:mail:example.com:marque",
+  "provider_name": "Example Mail",
+  "provider_url": "https://example.com/marque",
+  "contact": {
+    "ops": "ops@example.com",
+    "abuse": "abuse@example.com",
+    "security": "security@example.com",
+    "legal": "legal@example.com"
+  },
+  "regions": ["eu-west", "eu-central", "us-east"],
+  "endpoints": {
+    "deposit":   "https://example.com/marque/v1/deposit",
+    "fetch":     "https://example.com/marque/v1/fetch",
+    "keypackage":"https://example.com/marque/v1/keypackage",
+    "discovery": "https://example.com/marque/v1/discover",
+    "bridge":    "smtp:mx.example.com:25"
+  },
+  "supported_suites": [
+    "X25519MLKEM768+Ed25519+ML-DSA-65",
+    "X25519+Ed25519",
+    "P256+ECDSA-P256+ML-DSA-65"
+  ],
+  "supported_blocks": [
+    "core.text",
+    "core.attachment",
+    "core.image",
+    "core.audio",
+    "core.video",
+    "core.poll",
+    "core.schedule",
+    "core.form",
+    "core.payment_request",
+    "core.reaction",
+    "core.reply",
+    "core.signed_action",
+    "core.embed",
+    "core.edit",
+    "core.retract"
+  ],
+  "wasm_widget_policy": {
+    "accepted": true,
+    "wasmtime_version_min": "22.0.0",
+    "cpu_ms_budget": 200,
+    "memory_mb_budget": 32
+  },
+  "retention": {
+    "default_days": 90,
+    "minimum_days": 30,
+    "maximum_days": 365
+  },
+  "size_limits": {
+    "envelope_max_bytes": 16777216,
+    "attachment_max_bytes": 2147483648,
+    "total_mailbox_bytes_per_user": 107374182400
+  },
+  "pad_buckets": ["4KB", "16KB", "64KB", "256KB", "1MB", "4MB"],
+  "anti_spam": {
+    "argon2id": {
+      "memory_kib": 65536,
+      "iterations": 3,
+      "parallelism": 4,
+      "base_ms_strangers": 5000,
+      "base_ms_contacts": 50
+    },
+    "bond_minimum_usd": 0.01,
+    "bond_maximum_usd": 1.00,
+    "reputation_gossip_enabled": true,
+    "proof_of_humanity_required": false
+  },
+  "tiers": {
+    "casual":    { "offered": true,  "cost_per_msg_usd": 0     },
+    "attested":  { "offered": true,  "cost_per_msg_usd": 0.001 },
+    "certified": { "offered": true,  "cost_per_msg_usd": 0.30, "qtsp_partner": "did:mail:esempio-qtsp.it:notary" }
+  },
+  "bridge": {
+    "smtp_inbound":  "accept",
+    "smtp_outbound": "warn",
+    "legacy_gateway_qerds_pec": true,
+    "downgrade_policy": "warn"
+  },
+  "transparency_log": {
+    "log_url": "https://rekor.marqueproto.org",
+    "witnesses": [
+      "did:mail:isoc.org:witness",
+      "did:mail:eff.org:witness",
+      "did:mail:mozilla.org:witness"
+    ],
+    "ots_checkpoint_interval_hours": 168
+  },
+  "conformance": {
+    "spec_version": "marque-founding/v0",
+    "self_test_url": "https://example.com/marque/v1/self-test",
+    "last_passed": "2026-04-22T06:00:00Z"
+  }
+}

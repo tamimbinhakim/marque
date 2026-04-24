@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://marqueproto.org/schemas/blocks/core.reply.schema.json",
+  "title": "MBS core.reply block",
+  "description": "Structured reply with verifiable quote ranges. Per §7.2.2 and §7a.1.",
+  "type": "object",
+  "required": ["type", "in_reply_to"],
+  "properties": {
+    "type": { "const": "core.reply" },
+    "id":   { "type": "string" },
+    "in_reply_to": {
+      "type": "object",
+      "description": "The message being replied to.",
+      "required": ["content_id"],
+      "properties": {
+        "content_id": { "$ref": "../_defs/common.schema.json#/$defs/blake3_256" },
+        "thread_id":  { "type": "string" },
+        "author_did": { "$ref": "../_defs/common.schema.json#/$defs/did_mail" }
+      }
+    },
+    "quote": {
+      "type": "object",
+      "description": "Verifiable quoted range. The quoted text MUST byte-match the referenced range of the original message per content_id.",
+      "properties": {
+        "text":        { "type": "string" },
+        "range_start": { "type": "integer", "minimum": 0 },
+        "range_end":   { "type": "integer", "minimum": 0 }
+      }
+    },
+    "body": {
+      "description": "The reply's own content — usually one or more core.text blocks.",
+      "type": "array"
+    }
+  },
+  "additionalProperties": false
+}

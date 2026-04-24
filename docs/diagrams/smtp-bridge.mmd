@@ -1,0 +1,33 @@
+%% Marque — SMTP bridge flow
+%% Inbound SMTP → Marque with opportunistic encryption upgrade.
+%% Used in docs/architecture-overview.md §5.
+
+flowchart LR
+    GM[["Legacy sender<br/>alice@gmail.com"]] -->|SMTP| BR[Bridge MTA]
+
+    BR --> D1{Sender key<br/>discoverable?}
+
+    subgraph DISCOVERY ["Four hybrid discovery methods"]
+        direction TB
+        M1[DID resolver<br/><i>primary</i>]
+        M2[DNS TXT<br/>_marque.legacy.com]
+        M3[/.well-known/<br/>marque-did/]
+        M4[Autocrypt header<br/>on prior mail]
+    end
+    D1 -.-> DISCOVERY
+
+    D1 -->|yes| ENC[Wrap in MLS<br/><b>ENCRYPTED-BRIDGED</b><br/>green upgrade arrow chip]
+    D1 -->|no| PT[PLAINTEXT-BRIDGED<br/>gray envelope chip<br/>+ warning]
+
+    ENC --> MB[(Marque mailbox)]
+    PT --> MB
+    MB --> RCPT[["Marque recipient<br/>bob · did:mail:example.com:bob"]]
+
+    classDef legacy fill:#fafaf9,stroke:#78716c;
+    classDef bridge fill:#eef2ff,stroke:#4f46e5,stroke-width:2px;
+    classDef enc fill:#ecfdf5,stroke:#047857;
+    classDef plain fill:#fef3c7,stroke:#b45309;
+    class GM legacy
+    class BR bridge
+    class ENC enc
+    class PT plain

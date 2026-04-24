@@ -1,0 +1,124 @@
+; Marque envelope — canonical CBOR wire format (v1)
+;
+; This is the single source of truth for the wire format. The JSON Schemas
+; in this directory are debugging/development projections; implementations
+; MUST encode and decode against this CDDL.
+;
+; Normative references:
+;   RFC 8949  — Concise Binary Object Representation (CBOR)
+;   RFC 8610  — CDDL
+;   RFC 9420  — MLS
+;   draft-tamim-marque-core — Marque Core Protocol
+
+; ---------------------------------------------------------------------
+; Top-level envelope
+; ---------------------------------------------------------------------
+
+envelope = {
+    0  => tstr,              ; version            ("marque/1")
+    1  => bstr .size 32,     ; recipient_pseudonym
+    2  => tstr,              ; sender_did
+    3  => tstr,              ; sender_cert_ref
+    4  => auth_mode,
+    5  => privacy_tier,
+    6  => tstr,              ; cipher_suite
+    7  => bstr .size 32,     ; content_id (BLAKE3-256 of ciphertext)
+    8  => uint,              ; timestamp_seconds  (UTC Unix seconds)
+  ? 9  => uint,              ; timestamp_ms       (milliseconds offset; optional subsecond)
+    10 => pad_bucket,
+  ? 11 => legacy_headers,    ; only present for bridged messages
+    12 => bstr,              ; ciphertext (MLS PublicMessage / PrivateMessage)
+    13 => signature,
+  ? 14 => proof_envelope_ref,     ; REQUIRED iff auth_mode = QUALIFIED
+  ? 15 => forwardable,
+  ? 16 => quotable,
+  ? 17 => tstr,              ; thread_id (MLS group_id, hex-encoded)
+  ? 18 => sender_acting,     ; for Room-originated sends (§4b.4)
+  ? 19 => bool,              ; was_bcc (§7a.5.1, carried inside MLS payload normally)
+}
+
+pad_tail = bstr              ; random padding to reach pad_bucket; NOT signed
+
+; ---------------------------------------------------------------------
+; Enumerations
+; ---------------------------------------------------------------------
+
+auth_mode = &(
+  CASUAL:    0,
+  SIGNED:    1,
+  QUALIFIED: 2,
+)
+
+privacy_tier = &(
+  CASUAL: 0,
+  SEALED: 1,
+  MIXED:  2,
+)
+
+pad_bucket = &(
+  b4k:   0,
+  b16k:  1,
+  b64k:  2,
+  b256k: 3,
+  b1m:   4,
+  b4m:   5,
+)
+
+forwardable = &(
+  no:            0,
+  quoted_only:   1,
+  attested:      2,
+  qualified_only:3,
+)
+
+quotable = &(
+  no:  0,
+  yes: 1,
+)
+
+; ---------------------------------------------------------------------
+; Composite fields
+; ---------------------------------------------------------------------
+
+signature = {
+    "alg"      => tstr,
+  ? "classical"=> bstr,
+  ? "pq"       => bstr,
+}
+
+legacy_headers = { * tstr => tstr }
+
+proof_envelope_ref =
+    tstr                           ; URL reference to off-body ProofEnvelope
+  / bstr                           ; inline-embedded ProofEnvelope as CBOR
+
+sender_acting = {
+  "acting_dsk"        => tstr,     ; DID URL of the natural-person DSK
+  "room_authority"    => signature,; FROST or single signature by Room authority
+  ? "room_kind"       => tstr,     ; shared | team | list | delegation | org
+}
+
+; ---------------------------------------------------------------------
+; Validity constraints
+; ---------------------------------------------------------------------
+
+; version MUST be "marque/1" in this spec.
+;
+; timestamp_seconds MUST be within ±60 s of the ProofEnvelope timestamp
+; when auth_mode is SIGNED or QUALIFIED.
+;
+; pad_bucket MUST be the smallest bucket into which the fully-encoded
+; envelope (excluding pad_tail) fits. The on-wire transmission is
+; envelope || pad_tail, padded to the nominal bucket size.
+;
+; proof_envelope_ref MUST be present when auth_mode = QUALIFIED.
+;
+; forwardable defaults:
+;   CASUAL  → attested
+;   SIGNED  → attested
+;   QUALIFIED → qualified_only
+;
+; quotable defaults:
+;   CASUAL  → yes
+;   SIGNED  → yes
+;   QUALIFIED → no

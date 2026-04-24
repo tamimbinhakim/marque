@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://marqueproto.org/schemas/envelope.schema.json",
+  "title": "Marque Envelope",
+  "description": "JSON projection of a Marque wire envelope. The canonical encoding is CBOR per schemas/cddl/envelope.cddl.",
+  "type": "object",
+  "required": ["version", "envelope", "ciphertext", "signature"],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "marque/1",
+      "description": "Protocol version marker. Clients MUST reject unknown versions."
+    },
+    "envelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "recipient_pseudonym",
+        "sender_did",
+        "sender_cert_ref",
+        "auth_mode",
+        "privacy_tier",
+        "suite",
+        "content_id",
+        "timestamp",
+        "pad_bucket"
+      ],
+      "properties": {
+        "recipient_pseudonym": { "$ref": "./_defs/common.schema.json#/$defs/hmac_sha256" },
+        "sender_did":          { "$ref": "./_defs/common.schema.json#/$defs/did_mail" },
+        "sender_cert_ref":     {
+          "type": "string",
+          "description": "Fragment identifier of the DSK in the sender's DID document."
+        },
+        "auth_mode":    { "$ref": "./_defs/common.schema.json#/$defs/auth_mode" },
+        "privacy_tier": { "$ref": "./_defs/common.schema.json#/$defs/privacy_tier" },
+        "suite": {
+          "type": "string",
+          "description": "Cipher suite identifier from the IANA Marque Algorithms registry."
+        },
+        "content_id":   { "$ref": "./_defs/common.schema.json#/$defs/blake3_256" },
+        "timestamp":    { "$ref": "./_defs/common.schema.json#/$defs/rfc3339_utc" },
+        "pad_bucket":   { "$ref": "./_defs/common.schema.json#/$defs/pad_bucket" },
+        "forwardable":  { "$ref": "./_defs/common.schema.json#/$defs/forwardable" },
+        "quotable":     { "$ref": "./_defs/common.schema.json#/$defs/quotable" },
+        "thread_id": {
+          "type": "string",
+          "description": "MLS group_id hex-encoded. Identifies the thread this message belongs to."
+        },
+        "legacy_headers": {
+          "description": "Preserved RFC 5322 headers for bridged-inbound messages per §10.2. Null if native.",
+          "anyOf": [
+            { "type": "null" },
+            { "type": "object", "additionalProperties": { "type": "string" } }
+          ]
+        },
+        "sender_acting": {
+          "type": "object",
+          "description": "Present when the envelope is Room-originated. See §4b.4.",
+          "required": ["acting_dsk", "room_authority"],
+          "properties": {
+            "acting_dsk":     { "type": "string" },
+            "room_authority": {
+              "type": "object",
+              "required": ["alg"],
+              "properties": {
+                "alg":       { "type": "string" },
+                "classical": { "type": "string" },
+                "pq":        { "type": "string" }
+              }
+            },
+            "room_kind": { "$ref": "./_defs/common.schema.json#/$defs/room_kind" }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "privacy_tier": { "const": "MIXED" } }, "required": ["privacy_tier"] },
+          "then": {
+            "properties": { "auth_mode": { "not": { "const": "QUALIFIED" } } },
+            "description": "Per §5.5 and §13.2.4, MIXED privacy_tier is mutually exclusive with QUALIFIED auth_mode."
+          }
+        }
+      ]
+    },
+    "ciphertext": {
+      "description": "Opaque MLS AppMessage. In canonical CBOR this is a byte string; in the JSON projection it is base64-encoded, or — for debugging only — an object showing decoded structure.",
+      "oneOf": [
+        { "type": "string", "contentEncoding": "base64" },
+        { "type": "object" }
+      ]
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["alg"],
+      "properties": {
+        "alg":       { "type": "string", "examples": ["Ed25519", "Ed25519+ML-DSA-65", "ECDSA-P256+ML-DSA-65"] },
+        "classical": { "type": "string" },
+        "pq":        { "type": "string" }
+      }
+    },
+    "proof_envelope_ref": {
+      "description": "Reference to or inline form of a ProofEnvelope for SIGNED and QUALIFIED auth modes.",
+      "anyOf": [
+        { "type": "null" },
+        { "type": "string", "format": "uri" },
+        { "$ref": "./proof-envelope.schema.json" }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "envelope": {
+            "properties": { "auth_mode": { "const": "QUALIFIED" } }
+          }
+        }
+      },
+      "then": {
+        "required": ["proof_envelope_ref"],
+        "properties": {
+          "proof_envelope_ref": { "not": { "type": "null" } }
+        }
+      }
+    }
+  ]
+}

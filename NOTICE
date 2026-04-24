@@ -1,0 +1,27 @@
+Marque Protocol
+Copyright 2026 The Marque Protocol Contributors.
+
+This product includes specification text licensed under the Creative Commons
+Attribution 4.0 International License (see LICENSE-SPEC).
+
+Reference code and schemas are licensed under the Apache License, Version 2.0
+(see LICENSE).
+
+---
+
+This specification builds on and references the following works. Their
+inclusion by reference is not endorsement, and their authors bear no
+responsibility for any errors in Marque.
+
+- IETF RFC 9420 (MLS), RFC 9591 (FROST), RFC 9106 (Argon2), RFC 9000 (QUIC),
+  RFC 8032 (Ed25519), RFC 7748 (X25519), RFC 9578 (Privacy Pass), RFC 3161
+  (Timestamp Protocol), RFC 7154 (IETF Conduct), RFC 7776 (Anti-Harassment).
+- W3C Decentralized Identifiers (DIDs) v1.0, W3C Verifiable Credentials 2.0.
+- ETSI EN 319 522, EN 319 532, TS 119 461, TS 119 524, EN 319 422, EN 319 122
+  (CAdES profiles).
+- FIPS 204 (ML-DSA), FIPS 205 (SLH-DSA), FIPS 140-3.
+- Regulation (EU) 2024/1183 (eIDAS 2.0); DPR 68/2005 (Italian PEC).
+- OpenTimestamps specification.
+- Bluesky AT Protocol, `did:plc` specification.
+- KERI (Key Event Receipt Infrastructure).
+- BLAKE3 reference specification.

@@ -1,0 +1,128 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/did/v1",
+    "https://marqueproto.org/context/did-mail/v1"
+  ],
+  "id": "did:mail:example.com:alice",
+  "alsoKnownAs": [
+    "mailto:alice@example.com"
+  ],
+  "verificationMethod": [
+    {
+      "id": "did:mail:example.com:alice#irk-2026-04-01",
+      "type": "Ed25519VerificationKey2020",
+      "controller": "did:mail:example.com:alice",
+      "publicKeyMultibase": "z6MkpTHR8VNsBxYAAWHut2Geadd9jSrFnWFYb6m8pyBrR7TD"
+    },
+    {
+      "id": "did:mail:example.com:alice#dsk-phone-2026-04",
+      "type": "Ed25519VerificationKey2020",
+      "controller": "did:mail:example.com:alice",
+      "publicKeyMultibase": "z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+      "x-marque": {
+        "device": "phone",
+        "issuedBy": "did:mail:example.com:alice#irk-2026-04-01",
+        "issuedAt": "2026-04-02T09:14:00Z",
+        "expires": "2026-10-02T09:14:00Z",
+        "pqHybrid": {
+          "algorithm": "ML-DSA-65",
+          "publicKey": "... 1952 bytes base64 ..."
+        }
+      }
+    },
+    {
+      "id": "did:mail:example.com:alice#dsk-laptop-2026-04",
+      "type": "Ed25519VerificationKey2020",
+      "controller": "did:mail:example.com:alice",
+      "publicKeyMultibase": "z6Mki1vmnQ3KSRT8Ey2cQd7w5wWjGBdf82R9Bz1Qw6k5mvpN",
+      "x-marque": {
+        "device": "laptop",
+        "issuedBy": "did:mail:example.com:alice#irk-2026-04-01",
+        "issuedAt": "2026-04-02T09:15:12Z",
+        "expires": "2026-10-02T09:15:12Z"
+      }
+    }
+  ],
+  "authentication": [
+    "did:mail:example.com:alice#dsk-phone-2026-04",
+    "did:mail:example.com:alice#dsk-laptop-2026-04"
+  ],
+  "keyAgreement": [
+    "did:mail:example.com:alice#dsk-phone-2026-04",
+    "did:mail:example.com:alice#dsk-laptop-2026-04"
+  ],
+  "service": [
+    {
+      "id": "did:mail:example.com:alice#inbox-primary",
+      "type": "MarqueMailbox",
+      "serviceEndpoint": "https://mail.example.com/marque/v1",
+      "priority": 10,
+      "retentionDays": 90
+    },
+    {
+      "id": "did:mail:example.com:alice#inbox-alt",
+      "type": "MarqueMailbox",
+      "serviceEndpoint": "https://backup.someotherprovider.tld/marque/v1",
+      "priority": 20,
+      "retentionDays": 30
+    },
+    {
+      "id": "did:mail:example.com:alice#legacy",
+      "type": "LegacySMTPBridge",
+      "serviceEndpoint": "mailto:alice@example.com"
+    }
+  ],
+  "x-marque": {
+    "kel": {
+      "endpoint": "https://example.com/.well-known/mail-did/alice/kel.jsonl",
+      "latestEvent": {
+        "seq": 7,
+        "hash": "blake3:3f0c4b9e7a5d2c8f1b6a4e9d3c0b2a7f8e5d4c1b9a6e3d0c7b4a1e8d5c2b9f6e",
+        "timestamp": "2026-04-02T09:14:00Z"
+      }
+    },
+    "guardians": [
+      {
+        "label": "home-provider-default",
+        "did": "did:mail:example.com:support",
+        "weight": 1
+      },
+      {
+        "label": "spouse",
+        "did": "did:mail:example.com:bob",
+        "weight": 1
+      },
+      {
+        "label": "sibling",
+        "did": "did:mail:other.tld:carol",
+        "weight": 1
+      },
+      {
+        "label": "lawyer",
+        "did": "did:mail:firm.law:dan",
+        "weight": 1
+      },
+      {
+        "label": "paper-phrase-hash",
+        "type": "PassphraseCommit",
+        "commit": "blake3:..."
+      }
+    ],
+    "nullificationWindowHours": 72,
+    "capabilities": {
+      "supportedSuites": [
+        "X25519MLKEM768+Ed25519+ML-DSA-65",
+        "X25519+Ed25519"
+      ],
+      "supportedBlocks": [
+        "core.text",
+        "core.attachment",
+        "core.schedule",
+        "core.reply",
+        "core.reaction",
+        "core.signed_action"
+      ],
+      "padToBuckets": ["4KB", "16KB", "64KB", "256KB", "1MB", "4MB"]
+    }
+  }
+}

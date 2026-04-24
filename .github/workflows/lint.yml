@@ -1,0 +1,100 @@
+name: Lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  markdown:
+    runs-on: ubuntu-latest
+    name: Markdown
+    steps:
+      - uses: actions/checkout@v4
+      - name: markdownlint
+        uses: DavidAnson/markdownlint-cli2-action@v16
+        with:
+          globs: |
+            **/*.md
+            !node_modules
+            !rendered
+
+  links:
+    runs-on: ubuntu-latest
+    name: Link check
+    steps:
+      - uses: actions/checkout@v4
+      - name: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --cache
+            --max-cache-age 7d
+            --exclude-path rendered
+            --exclude 'https://marqueproto.org'
+            --exclude 'https://marque.email'
+            './**/*.md'
+
+  json-schemas:
+    runs-on: ubuntu-latest
+    name: Validate schemas and examples
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install validators
+        run: npm i -g ajv-cli ajv-formats
+      - name: Validate envelope example
+        run: |
+          ajv validate \
+            -s schemas/envelope.schema.json \
+            -d examples/envelope.json \
+            --spec=draft2020 \
+            -c ajv-formats
+      - name: Validate DID document example
+        run: |
+          ajv validate \
+            -s schemas/did-mail.schema.json \
+            -d examples/did-document.json \
+            --spec=draft2020 \
+            -c ajv-formats
+      - name: Validate capability record example
+        run: |
+          ajv validate \
+            -s schemas/capability-record.schema.json \
+            -d examples/capability-record.json \
+            --spec=draft2020 \
+            -c ajv-formats
+      - name: Validate ProofEnvelope example
+        run: |
+          ajv validate \
+            -s schemas/proof-envelope.schema.json \
+            -d examples/proof-envelope.json \
+            --spec=draft2020 \
+            -c ajv-formats
+
+  mip-frontmatter:
+    runs-on: ubuntu-latest
+    name: MIP front-matter check
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check MIP front-matter fields
+        run: |
+          set -e
+          shopt -s nullglob
+          fail=0
+          for f in mips/mip-*.md; do
+            for field in mip title author status category created; do
+              if ! grep -qE "^${field}:" "$f"; then
+                echo "::error file=${f}::missing front-matter field '${field}'"
+                fail=1
+              fi
+            done
+          done
+          exit $fail

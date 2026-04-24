@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://marqueproto.org/schemas/capability-record.schema.json",
+  "title": "Marque Provider Capability Record",
+  "description": "Served at /.well-known/marque-provider.json. Describes what a Marque provider supports.",
+  "type": "object",
+  "required": ["provider_version", "provider_did", "endpoints", "supported_suites", "tiers", "bridge"],
+  "properties": {
+    "provider_version": { "type": "string", "const": "marque-provider/1" },
+    "provider_did":     { "type": "string", "pattern": "^did:mail:" },
+    "provider_name":    { "type": "string" },
+    "provider_url":     { "type": "string", "format": "uri" },
+    "contact": {
+      "type": "object",
+      "properties": {
+        "ops":      { "type": "string" },
+        "abuse":    { "type": "string" },
+        "security": { "type": "string" },
+        "legal":    { "type": "string" }
+      }
+    },
+    "regions": { "type": "array", "items": { "type": "string" } },
+    "endpoints": {
+      "type": "object",
+      "required": ["deposit", "fetch", "keypackage", "discovery"],
+      "properties": {
+        "deposit":        { "type": "string", "format": "uri" },
+        "fetch":          { "type": "string", "format": "uri" },
+        "keypackage":     { "type": "string", "format": "uri" },
+        "discovery":      { "type": "string", "format": "uri" },
+        "bridge":         { "type": "string" },
+        "device_sync":    { "type": "string", "format": "uri", "description": "Endpoint for archive-key-encrypted cache-delta exchange per §4a.5." },
+        "archive_export": { "type": "string", "format": "uri", "description": "Endpoint for .marquebox export per §4a.7." },
+        "archive_import": { "type": "string", "format": "uri", "description": "Endpoint for .marquebox import per §4a.7." },
+        "bootstrap_token":{ "type": "string", "format": "uri", "description": "VOPRF bootstrap-token issuance endpoint per §2a.2." },
+        "search":         { "type": "string", "format": "uri", "description": "Optional provider-side encrypted-search endpoint (draft-tamim-marque-search)." }
+      }
+    },
+    "service_level": {
+      "type": "object",
+      "description": "Commitments on shutdown notice, termination notice, export turnaround. Per §4.8.",
+      "properties": {
+        "shutdown_notice_days":     { "type": "integer", "minimum": 90 },
+        "termination_notice_days":  { "type": "integer", "minimum": 30 },
+        "export_turnaround_days":   { "type": "integer", "minimum": 1,  "maximum": 14 },
+        "departed_user_retention_days": { "type": "integer", "minimum": 30 }
+      }
+    },
+    "supported_suites": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "supported_blocks": { "type": "array", "items": { "type": "string" } },
+    "wasm_widget_policy": {
+      "type": "object",
+      "properties": {
+        "accepted":             { "type": "boolean" },
+        "wasmtime_version_min": { "type": "string" },
+        "cpu_ms_budget":        { "type": "integer", "minimum": 0 },
+        "memory_mb_budget":     { "type": "integer", "minimum": 0 }
+      }
+    },
+    "retention": {
+      "type": "object",
+      "required": ["default_days", "minimum_days"],
+      "properties": {
+        "default_days": { "type": "integer", "minimum": 1 },
+        "minimum_days": { "type": "integer", "minimum": 30 },
+        "maximum_days": { "type": "integer", "minimum": 30 }
+      }
+    },
+    "size_limits": {
+      "type": "object",
+      "properties": {
+        "envelope_max_bytes":        { "type": "integer", "minimum": 0 },
+        "attachment_max_bytes":      { "type": "integer", "minimum": 0 },
+        "total_mailbox_bytes_per_user": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "pad_buckets": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["4KB", "16KB", "64KB", "256KB", "1MB", "4MB"] }
+    },
+    "anti_spam": {
+      "type": "object",
+      "properties": {
+        "argon2id": {
+          "type": "object",
+          "properties": {
+            "memory_kib":        { "type": "integer", "minimum": 1024 },
+            "iterations":        { "type": "integer", "minimum": 1 },
+            "parallelism":       { "type": "integer", "minimum": 1 },
+            "base_ms_strangers": { "type": "integer", "minimum": 0 },
+            "base_ms_contacts":  { "type": "integer", "minimum": 0 }
+          }
+        },
+        "bond_minimum":            { "type": "number", "minimum": 0, "description": "Minimum bond; currency specified in bond_currencies[]." },
+        "bond_maximum":            { "type": "number", "minimum": 0 },
+        "bond_currencies":         {
+          "type": "array",
+          "items": { "type": "string", "enum": ["USD", "EUR", "GBP", "BTC"] },
+          "default": ["USD"]
+        },
+        "bond_appeal_days":         { "type": "integer", "minimum": 0, "default": 14 },
+        "reputation_gossip_enabled":{ "type": "boolean" },
+        "proof_of_humanity_required": { "type": "boolean" },
+        "bootstrap_tokens_offered": { "type": "boolean", "description": "Per §2a.2 conformance MUST, providers SHOULD offer to newly-hosted DIDs." }
+      }
+    },
+    "tiers": {
+      "type": "object",
+      "required": ["casual", "attested", "certified"],
+      "properties": {
+        "casual": {
+          "type": "object",
+          "properties": {
+            "offered":          { "type": "boolean" },
+            "cost_per_msg_usd": { "type": "number", "minimum": 0 }
+          }
+        },
+        "attested": {
+          "type": "object",
+          "properties": {
+            "offered":          { "type": "boolean" },
+            "cost_per_msg_usd": { "type": "number", "minimum": 0 }
+          }
+        },
+        "certified": {
+          "type": "object",
+          "properties": {
+            "offered":          { "type": "boolean" },
+            "cost_per_msg_usd": { "type": "number", "minimum": 0 },
+            "qtsp_partner":     { "type": "string" }
+          }
+        }
+      }
+    },
+    "bridge": {
+      "type": "object",
+      "properties": {
+        "smtp_inbound":             { "type": "string", "enum": ["accept", "strict", "reject"] },
+        "smtp_outbound":            { "type": "string", "enum": ["allow", "warn", "deny"] },
+        "legacy_gateway_qerds_pec": { "type": "boolean" },
+        "downgrade_policy":         { "type": "string", "enum": ["allow", "warn", "deny"] }
+      }
+    },
+    "transparency_log": {
+      "type": "object",
+      "properties": {
+        "log_url":                     { "type": "string", "format": "uri" },
+        "witnesses":                   { "type": "array", "items": { "type": "string" } },
+        "ots_checkpoint_interval_hours": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "conformance": {
+      "type": "object",
+      "properties": {
+        "spec_version":  { "type": "string" },
+        "self_test_url": { "type": "string", "format": "uri" },
+        "last_passed":   { "type": "string", "format": "date-time" }
+      }
+    }
+  }
+}

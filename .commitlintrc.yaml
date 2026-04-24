@@ -1,0 +1,103 @@
+# commitlint — enforce Conventional Commits for the Marque spec repo.
+# https://commitlint.js.org
+#
+# This config is validated by a GitHub Action; no Node runtime is required
+# inside the repository. Local enforcement via husky/lefthook is optional
+# and up to the contributor.
+
+extends:
+  - '@commitlint/config-conventional'
+
+rules:
+  # Allowed types — spec-repo tuned.
+  type-enum:
+    - 2
+    - always
+    - - feat         # New normative addition
+      - add          # New non-normative addition
+      - change       # Substantive non-normative change
+      - update       # Refresh of existing content
+      - fix          # Correction to existing text (typo, error, inconsistency)
+      - deprecate    # Mark for later removal
+      - remove       # Remove content
+      - security     # Security-relevant change
+      - sec
+      - perf         # Performance-relevant change
+      - ref          # Add or correct a citation / reference
+      - cite
+      - docs         # Non-normative documentation change
+      - doc
+      - spec         # Change to spec/
+      - draft        # Change to drafts/
+      - schema       # Change to schemas/
+      - mip          # Change to mips/
+      - governance   # Change to GOVERNANCE / CODE_OF_CONDUCT / SECURITY
+      - refactor     # Non-behavioral restructure
+      - test         # Conformance test vectors
+      - ci           # CI configuration
+      - build        # Build tooling (cliff.toml, kramdown-rfc, etc.)
+      - chore        # Misc repo maintenance
+      - style        # Formatting only
+      - revert       # Revert prior commit
+
+  # Allowed scopes — optional, but if present must be one of these.
+  scope-enum:
+    - 2
+    - always
+    - - overview
+      - protocol
+      - context
+      - identity
+      - architecture
+      - rooms
+      - cryptography
+      - content
+      - proof
+      - antispam
+      - interop
+      - conformance
+      - terminology
+      - core
+      - arch
+      - mbs
+      - bridge
+      - storage
+      - did-mail
+      - envelope
+      - blocks
+      - whitepaper
+      - eidas
+      - compliance
+      - roadmap
+      - faq
+      - readme
+      - changelog
+      - lexicon
+      - governance
+      - security
+      - ci
+      - build
+      - release
+      - repo
+      - deps
+
+  # Subject line rules.
+  subject-case:
+    - 2
+    - never
+    - - start-case
+      - pascal-case
+      - upper-case
+  subject-empty:        [2, never]
+  subject-full-stop:    [2, never, '.']
+  subject-max-length:   [2, always, 72]
+
+  # Header / body / footer.
+  header-max-length:    [2, always, 100]
+  body-leading-blank:   [2, always]
+  body-max-line-length: [1, always, 100]
+  footer-leading-blank: [2, always]
+
+  # Types must be lowercase.
+  type-case:            [2, always, lower-case]
+  type-empty:           [2, never]

@@ -1,0 +1,27 @@
+# Marque repository CODEOWNERS
+#
+# Listed users/teams are automatically requested for review when a PR touches
+# the matching paths. CODEOWNERS is advisory — merge rules live in
+# GOVERNANCE.md, not here.
+
+# Spec text — full editor team
+/spec/            @marque-protocol/editors
+/drafts/          @marque-protocol/editors
+
+# MIPs — full editor team (no single editor can self-approve)
+/mips/            @marque-protocol/editors
+
+# Governance / process — editor-in-chief plus full team
+/GOVERNANCE.md    @marque-protocol/editors
+/CONTRIBUTING.md  @marque-protocol/editors
+/SECURITY.md      @marque-protocol/editors
+
+# Schemas and examples — editors plus schema-wg sub-team
+/schemas/         @marque-protocol/editors @marque-protocol/schema-wg
+/examples/        @marque-protocol/editors @marque-protocol/schema-wg
+
+# CI config
+/.github/         @marque-protocol/editors
+
+# Docs — anyone on the editors team can review
+/docs/            @marque-protocol/editors

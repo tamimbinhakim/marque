@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://marqueproto.org/schemas/blocks/core.attachment.schema.json",
+  "title": "MBS core.attachment block",
+  "description": "First-class content-addressed attachment with out-of-band storage per §7.4.",
+  "type": "object",
+  "required": ["type", "cid", "mime", "size_bytes", "sources"],
+  "properties": {
+    "type":      { "const": "core.attachment" },
+    "id":        { "type": "string" },
+    "cid":       {
+      "type": "string",
+      "pattern": "^blake3:[0-9a-f]{64}$",
+      "description": "BLAKE3-256 CID over canonical bytes."
+    },
+    "filename":  { "type": "string" },
+    "mime":      { "type": "string" },
+    "size_bytes":{ "type": "integer", "minimum": 0 },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "format": "uri" },
+      "description": "Ordered list of sources. Client tries in order. Marque URIs preferred; IPFS-style DHT URIs permitted."
+    },
+    "encrypted_to_group": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the blob is encrypted to the MLS group key. Default true."
+    },
+    "delta_base_cid": {
+      "type": "string",
+      "pattern": "^blake3:[0-9a-f]{64}$",
+      "description": "Optional. Base CID for BLAKE3 Merkle delta sync."
+    }
+  },
+  "additionalProperties": false
+}

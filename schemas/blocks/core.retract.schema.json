@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://marqueproto.org/schemas/blocks/core.retract.schema.json",
+  "title": "MBS core.retract block",
+  "description": "Signed retraction of a prior message. Does not erase — signals disavowal at a specific time. Per §6.8.",
+  "type": "object",
+  "required": ["type", "target"],
+  "properties": {
+    "type": { "const": "core.retract" },
+    "id":   { "type": "string" },
+    "target": {
+      "type": "object",
+      "required": ["content_id"],
+      "properties": {
+        "content_id":  { "$ref": "../_defs/common.schema.json#/$defs/blake3_256" },
+        "thread_id":   { "type": "string" }
+      }
+    },
+    "reason": {
+      "type": "string",
+      "description": "User-supplied rationale for the retraction."
+    },
+    "scope": {
+      "type": "string",
+      "enum": ["own_message", "thread_owner"],
+      "description": "own_message = sender retracts their own message (always permitted). thread_owner = Room owner retracts any member's message (Room-backed threads only; §4b.11).",
+      "default": "own_message"
+    }
+  },
+  "additionalProperties": false
+}

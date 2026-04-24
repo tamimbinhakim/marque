@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://marqueproto.org/schemas/blocks/core.forward.schema.json",
+  "title": "MBS core.forward block",
+  "description": "Forwarding primitive in three flavors: quoted, attested, certified. Per §7a.3.",
+  "type": "object",
+  "required": ["type", "flavor", "original"],
+  "properties": {
+    "type":   { "const": "core.forward" },
+    "id":     { "type": "string" },
+    "flavor": {
+      "type": "string",
+      "enum": ["quoted", "attested", "certified"],
+      "description": "§7a.3.1 quoted | §7a.3.2 attested | §7a.3.3 certified. Attested requires original had forwardable != 'no' and != 'quoted_only'. Certified requires forwardable = 'qualified_only' AND original tier = QUALIFIED AND forwarder is legal-person-capable."
+    },
+    "original": {
+      "type": "object",
+      "required": ["content_id", "author_did"],
+      "properties": {
+        "content_id":    { "$ref": "../_defs/common.schema.json#/$defs/blake3_256" },
+        "author_did":    { "$ref": "../_defs/common.schema.json#/$defs/did_mail" },
+        "timestamp":     { "$ref": "../_defs/common.schema.json#/$defs/rfc3339_utc" },
+        "subject_hint":  { "type": "string" }
+      }
+    },
+    "quoted_content": {
+      "description": "For flavor=quoted: the forwarder's MBS blocks embedding the original text. For flavor=attested or certified: NOT required; original envelope is carried in attested_envelope_ref.",
+      "type": "array"
+    },
+    "attested_envelope_ref": {
+      "description": "For flavor=attested or certified: inline or URL reference to the original envelope and its ProofEnvelope, preserving verifiable chain.",
+      "anyOf": [
+        { "type": "string", "format": "uri" },
+        { "type": "object" }
+      ]
+    },
+    "forward_chain": {
+      "type": "array",
+      "description": "Ordered hop list for attested or certified forwards. Each entry is a prior forwarder DID. Clients MAY refuse chains longer than 8 hops (§7a.3.2).",
+      "items": { "$ref": "../_defs/common.schema.json#/$defs/did_mail" },
+      "maxItems": 8
+    },
+    "forwarder_note": {
+      "type": "string",
+      "description": "Optional note from the forwarder to the recipient."
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if":   { "properties": { "flavor": { "const": "quoted" } } },
+      "then": { "required": ["quoted_content"] }
+    },
+    {
+      "if":   { "properties": { "flavor": { "enum": ["attested", "certified"] } } },
+      "then": { "required": ["attested_envelope_ref"] }
+    }
+  ]
+}

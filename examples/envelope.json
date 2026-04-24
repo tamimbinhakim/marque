@@ -1,0 +1,61 @@
+{
+  "$comment": "Illustrative JSON projection of a Marque envelope. Wire format is canonical CBOR per schemas/cddl/envelope.cddl.",
+  "version": "marque/1",
+  "envelope": {
+    "recipient_pseudonym": "hmac-sha256:7b3a1f6e2c8d4b5a9f0e3d7c2b8a1f6e5d4c3b2a1f0e9d8c7b6a5f4e3d2c1b0a",
+    "sender_did": "did:mail:example.com:alice",
+    "sender_cert_ref": "did:mail:example.com:alice#dsk-laptop-2026-04",
+    "auth_mode": "SIGNED",
+    "privacy_tier": "SEALED",
+    "suite": "X25519MLKEM768+Ed25519+ML-DSA-65",
+    "content_id": "blake3:9a2f7c4b8d3e1a6f5c0b7e4d2a9f6c3b0a5e8d1c4f7a2b9e6d3c0b7a4f1e8d5c",
+    "timestamp": "2026-04-23T14:32:07Z",
+    "pad_bucket": "16KB",
+    "thread_id": "blake3:1c0f7e3a5d8b9c2e4f6a7b8d0e1c3f4a5b6d7e8f9c0a1b2d3e4f5a6b7c8d9e0f",
+    "forwardable": "attested",
+    "quotable": "yes",
+    "legacy_headers": null
+  },
+  "ciphertext": {
+    "$comment": "This blob is the MLS AppMessage encrypted to the recipient's current epoch key. Shown here decoded for illustration only.",
+    "mls_group_id": "blake3:1c0f7e3a...",
+    "mls_epoch": 42,
+    "plaintext_preview_for_illustration": {
+      "alt_plaintext": "Hi Bob — draft of the quarterly budget attached. Let me know if Thursday afternoon works for a walk-through.",
+      "locales": ["en"],
+      "blocks": [
+        {
+          "type": "core.text",
+          "content": "Hi Bob — draft of the quarterly budget attached. Let me know if Thursday afternoon works for a walk-through."
+        },
+        {
+          "type": "core.attachment",
+          "cid": "blake3:b2f3c0a8e9d4f7a6c1b5e2d8f4a9c6e3b0d7f1a5c8e2b9d4f7a0c3e6b1d8f4a2",
+          "filename": "Q2-budget.xlsx",
+          "mime": "application/vnd.ms-excel",
+          "size_bytes": 48231,
+          "sources": [
+            "marque://example.com/blob/b2f3c0a8...",
+            "marque://backup.someotherprovider.tld/blob/b2f3c0a8..."
+          ]
+        },
+        {
+          "type": "core.schedule",
+          "prompt": "Pick a Thursday slot for a walk-through",
+          "proposals": [
+            { "start": "2026-04-30T13:00:00-04:00", "duration_minutes": 30 },
+            { "start": "2026-04-30T15:00:00-04:00", "duration_minutes": 30 }
+          ],
+          "timezone_hint": "America/New_York"
+        }
+      ]
+    }
+  },
+  "signature": {
+    "alg": "Ed25519+ML-DSA-65",
+    "classical": "ed25519:a1b2c3...",
+    "pq": "ml-dsa-65:d4e5f6..."
+  },
+  "proof_envelope_ref": null,
+  "$comment_auth_mode": "Because auth_mode is SIGNED (not QUALIFIED), this message does not carry a ProofEnvelope. See examples/proof-envelope.json for a Certified-tier example."
+}
