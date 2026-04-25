@@ -4,11 +4,14 @@
 
 This document is the shortest honest description of Marque. It exists so a reader can decide in ten minutes whether to keep reading.
 
+> [!TIP]
+> Unfamiliar acronym? Every term in this document — KERI, MLS, ERDS, QERDS, FROST, OpenTimestamps, ML-DSA, RFC 3161, CAdES — has a one-line definition and an authoritative-source link in the [glossary](../docs/glossary.md).
+
 ---
 
 ## In one paragraph
 
-Marque treats identity as a portable cryptographic object the user owns, not an address the provider rents. It encrypts message content end-to-end by default using MLS ([RFC 9420](https://datatracker.ietf.org/doc/html/rfc9420)), produces [eIDAS 2.0 QERDS](https://eur-lex.europa.eu/eli/reg/2024/1183/oj)-compliant legal proof as a tiered option, replaces HTML's frozen 2005 subset with a typed and signed block format, and anchors non-repudiable timestamps in Bitcoin via [OpenTimestamps](https://opentimestamps.org) at zero marginal cost — while keeping message content, routing, and identity entirely off-chain. Providers become commodity relays that compete on service quality, compliance, and storage, not on owning the user's address.
+Marque treats identity as a portable cryptographic object the user owns, not an address the provider rents. It encrypts message content end-to-end by default using [MLS (RFC 9420)][mls], produces [eIDAS 2.0 QERDS][eidas]-compliant legal proof as a tiered option, replaces HTML's frozen 2005 subset with a typed and signed block format, and anchors non-repudiable timestamps in Bitcoin via [OpenTimestamps][ots] at zero marginal cost — while keeping message content, routing, and identity entirely off-chain. Providers become commodity relays that compete on service quality, compliance, and storage, not on owning the user's address.
 
 ## Why it exists
 
@@ -17,22 +20,22 @@ Email's structural defects are now critical and cannot be patched by another bol
 - **Gmail and Microsoft have effectively killed self-hosting** through IP-reputation gatekeeping.
 - **Account suspension vaporizes decades of correspondence** with no human recourse.
 - **HTML rendering remains trapped in Outlook's Word engine** from 2005.
-- **Zero-click AI prompt injection** ([CVE-2025-32711 / EchoLeak](https://nvd.nist.gov/vuln/detail/CVE-2025-32711)) is now a weaponized attack class.
+- **Zero-click AI prompt injection** ([CVE-2025-32711 / EchoLeak][echoleak]) is now a weaponized attack class.
 - **AI-generated phishing** is ~83% of analyzed phish, and content filtering has reached its ceiling.
 
-The bolt-ons — SPF, DKIM, DMARC, ARC, BIMI, MTA-STS, TLS-RPT, List-Unsubscribe, Autocrypt, S/MIME, OpenPGP — are historical evidence that the 1982 SMTP substrate cannot absorb modern identity, cryptography, rich content, legal proof, AI-assistant safety, or provider competition.
+The bolt-ons — SPF, DKIM, DMARC, ARC, BIMI, MTA-STS, TLS-RPT, List-Unsubscribe, [Autocrypt][autocrypt], S/MIME, OpenPGP — are historical evidence that the 1982 SMTP substrate cannot absorb modern identity, cryptography, rich content, legal proof, AI-assistant safety, or provider competition.
 
 ## Core commitments
 
-| Commitment                                              | Detail                                                                                                                                                              |
-| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Identity is portable**                                | A long-lived keypair published as `did:mail`, with a KERI-style signed rotation log. Your address survives any provider change the way a phone number survives a carrier change. |
-| **Content is end-to-end encrypted**                     | MLS groups, per-message deniability / non-repudiation choice, post-quantum hybrid by default.                                                                        |
-| **Legal proof is native and tiered**                    | Casual / Signed / Registered, mapping to eIDAS ERDS and QERDS, with OpenTimestamps Bitcoin anchoring for zero-cost long-term verification.                          |
-| **Providers are dumb encrypted mailboxes**              | Store envelopes, not conversations. Never read content. Never own conversation state.                                                                                |
-| **Rich content is typed, signed, schema-validated blocks** | Not HTML tables. Deterministic rendering, native accessibility, render-capability negotiation.                                                                   |
-| **Anti-spam is economic and cryptographic**             | Verified sender identity, proof-of-work, refundable bonds, recipient-controlled policy — not AI-beats-AI content classification.                                    |
-| **SMTP interop is bidirectional and labeled honestly**  | `bridged · encrypted`, `email`, and `Registered` chips make provenance visible at a glance.                                                                          |
+| Commitment                                                 | Detail                                                                                                                                                                                                                                                     |
+| ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Identity is portable**                                   | A long-lived keypair published as a [`did:mail`](./protocol/02-identity.md), with a [KERI][keri]-style signed rotation log ([KEL](./protocol/02-identity.md)). Your address survives any provider change the way a phone number survives a carrier change. |
+| **Content is end-to-end encrypted**                        | [MLS][mls] groups, per-message deniability / non-repudiation choice ([§5.3](./protocol/05-cryptography.md)), [post-quantum hybrid][mlkem] by default.                                                                                                      |
+| **Legal proof is native and tiered**                       | [Casual / Signed / Registered](./protocol/01-terminology.md#4-tier-chips), mapping to [eIDAS ERDS / QERDS][eidas], with [OpenTimestamps][ots] Bitcoin anchoring for zero-cost long-term verification.                                                      |
+| **Providers are dumb encrypted mailboxes**                 | Store envelopes, not conversations. Never read content. Never own conversation state. See [`provider-role.mmd`](../docs/diagrams/provider-role.mmd).                                                                                                       |
+| **Rich content is typed, signed, schema-validated blocks** | Not HTML tables. Deterministic rendering, native accessibility, render-capability negotiation. See [Marque Block Spec](./protocol/06-content.md).                                                                                                          |
+| **Anti-spam is economic and cryptographic**                | Verified sender identity, [Argon2id][argon2] proof-of-work, refundable bonds, recipient-controlled policy — not AI-beats-AI content classification. See [§8](./protocol/08-anti-spam.md).                                                                  |
+| **SMTP interop is bidirectional and labeled honestly**     | `bridged · encrypted`, `email`, and `Registered` [chips](./protocol/01-terminology.md#5-bridge-and-interop-chips) make provenance visible at a glance.                                                                                                     |
 
 ## Reading paths
 
@@ -75,20 +78,33 @@ Read [`overview/02`](./overview/02-what-marque-is.md) to orient, then [`overview
 ### QTSP / trust-list operator — 1 hour
 
 - [`docs/compliance/eidas-mapping.md`](../docs/compliance/eidas-mapping.md) — side-by-side eIDAS 2.0 + ETSI ESI ↔ Marque mapping.
-- [`protocol/07-legal-proof.md`](./protocol/07-legal-proof.md) — normative `ProofEnvelope` and Qualified tier semantics.
+- [`protocol/07-legal-proof.md`](./protocol/07-legal-proof.md) — normative [`ProofEnvelope`](./protocol/07-legal-proof.md) and Qualified tier semantics.
 
 ## Status
 
-Pre-RFC founding specification. Target track: IETF Standards Track with ETSI ESI and W3C DID WG liaisons. Companion to the *Mailroom* AI-native MTA specification (Documents 1–2 of this series).
+Pre-RFC founding specification. Target track: IETF Standards Track with ETSI ESI and W3C DID WG liaisons. Companion to the _Mailroom_ AI-native MTA specification (Documents 1–2 of this series).
 
 ## Non-goals
+
+> [!IMPORTANT]
+> Marque is a **wire-protocol specification**. Anything below the wire (cryptography, transport) is by reference; anything above the wire (UX, business logic, MTA internals) is out of scope.
 
 - **Not a cryptocurrency.** No protocol token, no per-message gas, no wallet requirement.
 - **Not a blockchain.** Bitcoin anchoring is used narrowly for timestamp non-repudiation; content, identity, and routing stay off-chain.
 - **Not a client specification.** Marque defines wire format, identity, envelope, and block semantics. Client UX beyond the minimum rendering conformance is out of scope.
-- **Not an MTA specification.** Provider behavior beyond the minimum interop surface is specified by companion documents (e.g. *Mailroom*).
-- **Not a replacement for instant messaging.** Marque is async-first. Real-time chat remains better served by Matrix, Signal, or SimpleX.
+- **Not an MTA specification.** Provider behavior beyond the minimum interop surface is specified by companion documents (e.g. _Mailroom_).
+- **Not a replacement for instant messaging.** Marque is async-first. Real-time chat remains better served by [Matrix](https://matrix.org), [Signal](https://signal.org), or [SimpleX][simplex].
 
 ---
 
 Continue to [**Overview / What Marque replaces**](./overview/01-what-marque-replaces.md).
+
+[mls]: https://datatracker.ietf.org/doc/html/rfc9420
+[mlkem]: https://csrc.nist.gov/pubs/fips/203/final
+[keri]: https://arxiv.org/abs/1907.02143
+[eidas]: https://eur-lex.europa.eu/eli/reg/2024/1183/oj
+[ots]: https://opentimestamps.org
+[echoleak]: https://nvd.nist.gov/vuln/detail/CVE-2025-32711
+[autocrypt]: https://autocrypt.org/
+[argon2]: https://datatracker.ietf.org/doc/html/rfc9106
+[simplex]: https://simplex.chat

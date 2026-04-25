@@ -95,12 +95,12 @@ Open-ended discussion on GitHub Discussions, the announcement list, or a communi
 
 The author opens a PR transitioning status from `Draft` to `Review`, stating the MIP is feature-complete and ready for implementer scrutiny.
 
-Editors advance to Review when:
+Editors advance to Review when (use this as your pre-Review self-check):
 
-- All RFC 2119 language is precise.
-- Backwards-compatibility, security, privacy, and legal-proof sections are filled in (or explicitly marked "no impact" with justification).
-- At least one implementation sketch or branch exists (Core/Content/Bridge/Interface categories). No implementation in the Marque ecosystem is privileged; any conformance-passing codebase qualifies.
-- No unresolved blocking comments remain from prior editor review.
+- [ ] All RFC 2119 language is precise.
+- [ ] Backwards-compatibility, security, privacy, and legal-proof sections are filled in (or explicitly marked "no impact" with justification).
+- [ ] At least one implementation sketch or branch exists (Core/Content/Bridge/Interface categories). No implementation in the Marque ecosystem is privileged; any conformance-passing codebase qualifies.
+- [ ] No unresolved blocking comments remain from prior editor review.
 
 Review is open-ended. The minimum duration is **21 days** to give implementers time to evaluate. There is no maximum, but editors SHOULD nudge MIPs stuck in Review for >180 days toward Withdrawn or Deferred.
 

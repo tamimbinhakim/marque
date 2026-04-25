@@ -2,6 +2,9 @@
 
 Marque is a security-critical specification. If you believe you have found a vulnerability — in the spec itself, or in an interoperable implementation or deployment you can cite — please follow this policy.
 
+> [!CAUTION]
+> **Do not open public issues or PRs for vulnerabilities.** Public disclosure of an unpatched protocol-level flaw forfeits the [safe-harbor](#safe-harbor) protections below and may put deployed users at risk. Report privately via the [encrypted email channel](#how-to-report).
+
 ## Scope
 
 This repository coordinates disclosure for:

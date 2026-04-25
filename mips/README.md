@@ -28,37 +28,24 @@ _The index is regenerated from MIP front-matter on merge to `main`._
 
 ## Lifecycle
 
-```mermaid
-stateDiagram-v2
-    [*] --> Idea
-    Idea --> Draft
-    Draft --> Review
-    Draft --> Withdrawn
-    Review --> LastCall: ≥ 21 days
-    Review --> Withdrawn
-    Review --> Deferred
-    LastCall --> Final: ≥ 14 days
-    LastCall --> Review
-    LastCall --> Withdrawn
-    Deferred --> Review
-    Final --> Superseded
-    Withdrawn --> [*]
-    Superseded --> [*]
-    Final --> [*]
-
-    LastCall: Last Call
+```
+Idea → Draft → Review → Last Call → Final
+            ↓          ↓           ↑
+        Withdrawn   Superseded   Deferred
 ```
 
-_See [MIP-0001 §3](./mip-0001-process.md#3-lifecycle) for the full transition rules. Diagram source: [`../docs/diagrams/mip-lifecycle.mmd`](../docs/diagrams/mip-lifecycle.mmd)._
+The full transition rules — duration minimums, who advances each stage, what counts as a substantive objection — are normatively documented in [**MIP-0001 §3**](./mip-0001-process.md#3-lifecycle), which renders the same diagram with annotated transitions. Diagram source: [`../docs/diagrams/mip-lifecycle.mmd`](../docs/diagrams/mip-lifecycle.mmd).
 
-- **Idea** — discussion on an issue, mailing list, or community call. Not in this directory.
-- **Draft** — first merged version. Substantive revisions land as PRs amending the MIP file.
-- **Review** — the MIP author declares the proposal feature-complete; editors solicit implementer feedback.
-- **Last Call** — 14-day (minimum) final comment period. Editors publish a call on the announcement list.
-- **Final** — merged as normative. Spec updates cross-reference the MIP number.
-- **Withdrawn** — author-withdrawn before Final.
-- **Superseded** — replaced by a later MIP.
-- **Deferred** — parked by editors awaiting a dependency.
+| Stage | What it means |
+| ----- | ------------- |
+| **Idea** | Discussion on an issue, mailing list, or community call. Not in this directory. |
+| **Draft** | First merged version. Substantive revisions land as PRs amending the MIP file. |
+| **Review** | The MIP author declares the proposal feature-complete; editors solicit implementer feedback. |
+| **Last Call** | 14-day (minimum) final comment period. Editors publish a call on the announcement list. |
+| **Final** | Merged as normative. Spec updates cross-reference the MIP number. |
+| **Withdrawn** | Author-withdrawn before Final. |
+| **Superseded** | Replaced by a later MIP. |
+| **Deferred** | Parked by editors awaiting a dependency. |
 
 Status transitions are PRs. The editors perform the transition; the author may request a transition at any time.
 

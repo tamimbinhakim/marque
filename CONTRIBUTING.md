@@ -4,11 +4,14 @@ Thank you for considering a contribution. Marque is a pre-RFC protocol specifica
 
 ## Ground rules
 
+> [!WARNING]
+> **No scope creep.** Marque is the wire protocol, identity model, envelope, block spec, legal-proof semantics, and SMTP bridge. Client UX, provider business logic, AI features, and MTA internals belong downstream — to [Mailroom](https://github.com/marque-protocol/mailroom) or to any other implementation. PRs that pull product surface into the spec will be closed.
+
 1. **Read [`GOVERNANCE.md`](./GOVERNANCE.md) first.** It explains who decides what and how.
 2. **Be specific.** "I don't like this" is not a contribution. "Section 5.3 mandates MLS but does not specify a post-quantum ciphersuite codepoint; proposal: allocate `0xMarque0001` for `X25519MLKEM768+Ed25519+ML-DSA-65`" is.
 3. **Show your work.** If you claim a design is insecure, expensive, or slow, cite the attack, the cost model, or the benchmark.
 4. **Assume good faith, state disagreement explicitly.** This repository governs a protocol that could outlive all of us; polite evasion wastes everyone's time.
-5. **No scope creep.** Marque is the wire protocol, identity model, envelope, block spec, legal-proof semantics, and SMTP bridge. Client UX, provider business logic, and MTA internals belong to [Mailroom](https://github.com/marque-protocol/mailroom) or downstream implementations.
+5. **No scope creep.** (See callout above.)
 
 ## How to contribute
 
@@ -31,7 +34,8 @@ Pull requests are welcome for:
 - **Examples, schemas, test vectors** — additions under `examples/`, `schemas/`, or `spec/test-vectors/`. One maintainer approval; editorial review of prose.
 - **MIP drafts** — a new file under `mips/` following [`mips/mip-template.md`](./mips/mip-template.md). See the MIP process below.
 
-Pull requests **that change normative behavior** (MUST/SHOULD/MAY language, wire formats, cryptographic suites, trust model) **require a merged MIP**. Do not send such PRs without a MIP number.
+> [!IMPORTANT]
+> Pull requests **that change normative behavior** (MUST/SHOULD/MAY language, wire formats, cryptographic suites, trust model) **require a merged MIP**. Do not send such PRs without a MIP number.
 
 ### 3. Propose a change via MIP
 

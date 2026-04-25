@@ -6,7 +6,11 @@
 
 Marque treats identity as a portable [W3C DID][did] the user owns, not an address the provider rents. Content is wrapped in [MLS (RFC 9420)][mls] for end-to-end encryption by default. Legal proof is a tiered option that maps to [eIDAS 2.0 QERDS][eidas]. HTML's frozen 2005 subset is replaced with a typed, signed block format. Non-repudiable timestamps are anchored in Bitcoin via [OpenTimestamps][ots] at zero marginal cost while keeping message content, routing, and identity entirely off-chain.
 
-**Status.** Pre-RFC founding specification. Target track: IETF Standards Track with ETSI ESI and W3C DID WG liaisons.
+> [!NOTE]
+> **Status — pre-RFC founding specification.** Target track: IETF Standards Track with ETSI ESI and W3C DID WG liaisons. Target IETF submission: Q3 2026. Spec v1.0 target: 2028. Expect frequent updates until the first WG draft. The repository [CHANGELOG](./CHANGELOG.md) tracks every revision.
+
+> [!TIP]
+> If any acronym below (KERI, QERDS, FROST, ML-DSA, OTS, …) is unfamiliar, the [glossary and citation hub](./docs/glossary.md) defines every term with a one-line meaning and a link to the authoritative source.
 
 ---
 
@@ -14,13 +18,13 @@ Marque treats identity as a portable [W3C DID][did] the user owns, not an addres
 
 Start at [`spec/00-overview.md`](./spec/00-overview.md) — ten minutes, three reading paths.
 
-| Audience | Reading path | Time |
-|---|---|---|
-| **Executive / funder** | [`docs/whitepaper.md`](./docs/whitepaper.md) | 15 minutes |
-| **Product person** | `overview/01`, `02`, `03`, `04` | 30 minutes |
-| **Implementer** | `overview/02`, then [`overview/05`](./spec/overview/05-mvp.md) for the implementation-sequencing plan, then `protocol/01–10` in order | 4 hours |
-| **IETF reviewer** | [`drafts/draft-tamim-marque-arch-00`](./drafts/draft-tamim-marque-arch-00.md), then `protocol/02`, `03`, `05`, `07`, then `context/05` | 2 hours |
-| **QTSP / trust-list operator** | [`docs/compliance/eidas-mapping.md`](./docs/compliance/eidas-mapping.md), then `protocol/07-legal-proof.md` | 1 hour |
+| Audience                       | Reading path                                                                                                                           | Time       |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| **Executive / funder**         | [`docs/whitepaper.md`](./docs/whitepaper.md)                                                                                           | 15 minutes |
+| **Product person**             | `overview/01`, `02`, `03`, `04`                                                                                                        | 30 minutes |
+| **Implementer**                | `overview/02`, then [`overview/05`](./spec/overview/05-mvp.md) for the implementation-sequencing plan, then `protocol/01–10` in order  | 4 hours    |
+| **IETF reviewer**              | [`drafts/draft-tamim-marque-arch-00`](./drafts/draft-tamim-marque-arch-00.md), then `protocol/02`, `03`, `05`, `07`, then `context/05` | 2 hours    |
+| **QTSP / trust-list operator** | [`docs/compliance/eidas-mapping.md`](./docs/compliance/eidas-mapping.md), then `protocol/07-legal-proof.md`                            | 1 hour     |
 
 The specification is organized in three tracks:
 
@@ -36,18 +40,18 @@ spec/
 
 ## Core commitments
 
-| Commitment               | What Marque commits to                                                                                                                    |
-| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| **Portable identity**    | Cryptographic and portable. `did:mail` with a KERI-style signed rotation log, owned by the user, not the provider.                         |
-| **End-to-end encryption**| Encrypted by default via MLS, with per-message deniability-vs-non-repudiation choice and post-quantum hybrid ciphers.                      |
-| **Legal proof**          | Native and tiered. eIDAS 2.0 QERDS-conformant from day one, with OpenTimestamps Bitcoin anchoring for zero-cost long-term verification.    |
-| **Commodity providers**  | Dumb encrypted mailboxes. Store envelopes, not conversations. Never read content. Never own conversation state.                            |
-| **Typed content**        | Typed, signed, schema-validated block log. Not HTML tables. Deterministic rendering, native accessibility.                                |
-| **Anti-spam**            | Economic and cryptographic. Content filtering has reached its ceiling against LLM-generated abuse.                                         |
-| **Fair competition**     | Providers compete on features, not address lock-in. Portable identity forces it.                                                           |
-| **SMTP interop**         | Bidirectional SMTP bridge, opportunistic, clearly labeled, for 10–20 years.                                                                |
+| Commitment                | What Marque commits to                                                                                                                                                                                  |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Portable identity**     | A [`did:mail`](./spec/protocol/02-identity.md) the user owns — a long-lived keypair with a [KERI][keri]-style signed rotation log. Provider change is an entry edit; no correspondent updates anything. |
+| **End-to-end encryption** | Encrypted by default via [MLS][mls], with a per-message [deniability-vs-non-repudiation choice](./spec/protocol/05-cryptography.md) and a [post-quantum hybrid][mlkem] cipher suite.                    |
+| **Legal proof**           | Native and tiered: see the [`ProofEnvelope`](./spec/protocol/07-legal-proof.md). Maps to [eIDAS Article 43 / 44][eidas] (ERDS / [QERDS][eidas]). Anchored in Bitcoin via [OpenTimestamps][ots].         |
+| **Commodity providers**   | Dumb encrypted mailboxes. Store envelopes, not conversations. Never read content. Never own conversation state. See [`provider-role.mmd`](./docs/diagrams/provider-role.mmd).                           |
+| **Typed content**         | The [Marque Block Spec (MBS)](./spec/protocol/06-content.md) — typed, signed, schema-validated blocks. Not HTML tables. Deterministic rendering, native accessibility.                                  |
+| **Anti-spam**             | [Economic and cryptographic](./spec/protocol/08-anti-spam.md): verified identity, [Argon2id][argon2] proof-of-work, refundable bonds, gossip reputation. Content filtering has hit its ceiling.         |
+| **Fair competition**      | Providers compete on features, not address lock-in. Portable identity forces it. See [`spec/context/02-commercial-model.md`](./spec/context/02-commercial-model.md).                                    |
+| **SMTP interop**          | Bidirectional [SMTP bridge](./spec/protocol/09-interop.md), opportunistic, clearly labeled, for 10–20 years. See [`smtp-bridge.mmd`](./docs/diagrams/smtp-bridge.mmd).                                  |
 
-Marque is a composition of components that work in production today — Bluesky AT, MLS, Sigstore, OpenTimestamps, PEC, Hyperswarm, SimpleX, MIMI, FROST, Argon2id, BLAKE3, QUIC — wrapped in an opinionated architecture with firm red lines against on-chain content, per-message gas, wallet-only identity, single-provider capture, server-owned conversation state, and spec-optional extensions.
+Marque is a composition of components that work in production today — [Bluesky AT][atproto], [MLS][mls], [Sigstore][rekor], [OpenTimestamps][ots], [PEC][pec], [Hyperswarm][hyperswarm], [SimpleX][simplex], [MIMI][mimi], [FROST][frost], [Argon2id][argon2], [BLAKE3][blake3], [QUIC][quic] — wrapped in an opinionated architecture with firm red lines against on-chain content, per-message gas, wallet-only identity, single-provider capture, server-owned conversation state, and spec-optional extensions. Every component above is defined and linked in the [glossary and citation hub](./docs/glossary.md).
 
 ---
 
@@ -100,6 +104,7 @@ Marque composes from proven systems. Each reference below is a debt we acknowled
 
 - [Bluesky AT Protocol][atproto] — data-provider separation, account migration at scale.
 - [MLS / RFC 9420][mls] — end-to-end group key agreement.
+- [KERI][keri] — append-only key-event-log discipline for portable identity rotation.
 - [Sigstore Rekor][rekor] and [OpenTimestamps][ots] — transparency and Bitcoin anchoring.
 - [Italian PEC][pec] — legal-tier registered electronic mail at scale.
 - [Hyperswarm][hyperswarm] — P2P UDP holepunching.
@@ -148,6 +153,8 @@ See [`LICENSE`](./LICENSE) for the full text.
 
 [did]: https://www.w3.org/TR/did-core/
 [mls]: https://datatracker.ietf.org/doc/html/rfc9420
+[mlkem]: https://csrc.nist.gov/pubs/fips/203/final
+[keri]: https://arxiv.org/abs/1907.02143
 [eidas]: https://eur-lex.europa.eu/eli/reg/2024/1183/oj
 [ots]: https://opentimestamps.org
 [echoleak]: https://nvd.nist.gov/vuln/detail/CVE-2025-32711

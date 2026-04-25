@@ -43,34 +43,7 @@ Every file opens with a one-sentence abstract and a **"You will learn"** bullet 
 
 ## Reading paths
 
-### Executive / funder — 15 minutes
-
-- [`docs/whitepaper.md`](../docs/whitepaper.md) — proposal-style summary, no RFC 2119 keywords.
-
-### Product person — 30 minutes
-
-- [`00-overview`](./00-overview.md)
-- [`overview/01–05`](./overview/)
-
-### Implementer — 4 hours
-
-- [`overview/02`](./overview/02-what-marque-is.md) — orientation
-- [`overview/05-mvp`](./overview/05-mvp.md) — twelve-week first-slice implementation-sequencing plan
-- [`protocol/01–10`](./protocol/) — in order
-
-### IETF reviewer — 2 hours
-
-- [`drafts/draft-tamim-marque-arch-00`](../drafts/draft-tamim-marque-arch-00.md) — Informational architecture draft
-- [`protocol/02`](./protocol/02-identity.md) — identity
-- [`protocol/03`](./protocol/03-architecture.md) — architecture
-- [`protocol/05`](./protocol/05-cryptography.md) — cryptography
-- [`protocol/07`](./protocol/07-legal-proof.md) — legal proof
-- [`context/05`](./context/05-risks.md) — risks and open questions
-
-### QTSP / trust-list operator — 1 hour
-
-- [`docs/compliance/eidas-mapping.md`](../docs/compliance/eidas-mapping.md) — eIDAS 2.0 + ETSI ESI ↔ Marque mapping
-- [`protocol/07-legal-proof.md`](./protocol/07-legal-proof.md) — normative Qualified-tier semantics
+The five audience-specific reading paths (Executive, Product, Implementer, IETF reviewer, QTSP) are documented once in [`00-overview.md`](./00-overview.md#reading-paths). Start there.
 
 ## RFC 2119 language
 

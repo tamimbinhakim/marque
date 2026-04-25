@@ -4,6 +4,9 @@
 > Target track: IETF Standards Track. ETSI ESI and W3C DID WG liaisons in preparation.
 > Status: research complete, first interoperable implementations pending, IETF submission Q3 2026.
 
+> [!TIP]
+> Every acronym in this whitepaper — KERI, MLS, ERDS, QERDS, FROST, OpenTimestamps, ML-DSA, RFC 3161, CAdES, PEC, AgID — is defined with a one-line meaning and an authoritative-source link in the [glossary and citation hub](./glossary.md). Open it in a second tab if you want footnotes.
+
 ## The elevator pitch
 
 Email is broken in ways its forty-year history of patches has failed to fix. Marque is a cryptographically signed, federated, peer-to-peer-capable messaging protocol proposed as its successor. It keeps everything about email that worked — asynchronous, addressable, federated, vendor-neutral — and fixes what did not: identity is portable cryptographic, content is end-to-end encrypted by default, rich content is a typed signed block log rather than frozen-2005 HTML, legal proof is native and tiered, anti-spam is economic and cryptographic rather than AI-beats-AI content classification, and the bridge to legacy SMTP is bidirectional and honestly labeled throughout a ten-to-twenty year transition.
@@ -26,11 +29,11 @@ Add: **eIDAS 2.0 ([Regulation (EU) 2024/1183](https://eur-lex.europa.eu/eli/reg/
 
 Seven commitments. Each one removes a class of SMTP failure.
 
-**1. Identity is cryptographic and portable.** A user's identity is a `did:mail` — a long-lived cryptographic keypair with a published DID document listing service endpoints, signed over by a KERI-style key event log. Changing providers is an entry in the DID document; correspondents update nothing. The phone-number-portability analogy, applied correctly. Recovery is a configurable M-of-N guardian threshold; the provider is allowed to be one guardian but not sole guardian.
+**1. Identity is cryptographic and portable.** A user's identity is a [`did:mail`](../spec/protocol/02-identity.md) — a long-lived cryptographic keypair with a published [DID document][did] listing service endpoints, signed over by a [KERI][keri]-style key event log. Changing providers is an entry in the DID document; correspondents update nothing. The phone-number-portability analogy, applied correctly. Recovery is a configurable M-of-N guardian threshold; the provider is allowed to be one guardian but not sole guardian.
 
-**2. Content is end-to-end encrypted by default.** Messages ride inside MLS groups (RFC 9420, 2023). One group per thread. Post-compromise security, forward secrecy, O(log n) scaling to 50 000-member groups. The mandatory cipher suite is classical (X25519 / Ed25519); a post-quantum hybrid (X25519MLKEM768 / Ed25519 + ML-DSA-65) is registered and will be promoted to mandatory when NIST deprecates the classical baseline.
+**2. Content is end-to-end encrypted by default.** Messages ride inside [MLS][mls] groups (RFC 9420, 2023). One group per thread. Post-compromise security, forward secrecy, `O(log n)` scaling to 50 000-member groups. The mandatory cipher suite is classical ([X25519][rfc7748] / [Ed25519][rfc8032]); a [post-quantum hybrid][hybrid-kem] (X25519+[ML-KEM-768][mlkem] / Ed25519 + [ML-DSA-65][mldsa]) is registered and will be promoted to mandatory when NIST deprecates the classical baseline.
 
-**3. Legal proof is native and tiered.** Three tiers: Casual (no chip), Signed / Attested (ERDS grade, maps to eIDAS Article 43), Qualified / Registered (QERDS grade, maps to eIDAS Article 44). Composition: sender DSK signature + RFC 3161 qualified timestamps + optional FROST (RFC 9591) threshold signatures from notary quorum + OpenTimestamps Bitcoin anchor for long-term verifiability at zero marginal cost + CAdES-B-LTA archival timestamps for Qualified tier. QTSP co-signature for Qualified tier provides the legal-person binding required by eIDAS.
+**3. Legal proof is native and tiered.** Three tiers: Casual (no chip), Signed / Attested ([ERDS][eidas] grade, maps to eIDAS Article 43), Qualified / Registered ([QERDS][eidas] grade, maps to eIDAS Article 44). Composition: sender DSK signature + [RFC 3161][rfc3161] qualified timestamps + optional [FROST (RFC 9591)][frost] threshold signatures from notary quorum + [OpenTimestamps][ots] Bitcoin anchor for long-term verifiability at zero marginal cost + [CAdES-B-LTA][cades] archival timestamps for Qualified tier. [QTSP][eidas] co-signature for Qualified tier provides the legal-person binding required by eIDAS. Full structure: [`ProofEnvelope`](../spec/protocol/07-legal-proof.md).
 
 **4. Providers are commodity encrypted mailboxes.** Providers store envelopes. Not conversations. Not membership state. Not threads. Storage cost scales as `envelopes × ciphertext_size`, not as `users × rooms × membership × history`. A provider holding 30 days of mail for a million users is one well-specced rack. Providers MUST NOT read content, MUST NOT own conversation state, MUST NOT see the social graph beyond immediate deposit metadata. This commodity-role design is what lets new providers enter the market without acquiring years of reputation data.
 
@@ -44,9 +47,9 @@ Seven commitments. Each one removes a class of SMTP failure.
 
 A Marque message is:
 
-* An outer **canonical CBOR envelope** carrying sender DID, recipient pseudonym, auth mode, privacy tier, cipher suite, BLAKE3 content ID, pad bucket, and optional proof-envelope reference.
-* An **MLS-encrypted payload** containing the Marque Block Spec document (the typed content).
-* An optional **ProofEnvelope** retrieved out-of-band, carrying the tiered non-repudiation artifact (signatures, timestamps, Bitcoin anchor, optional QTSP qualified certificate).
+* An outer **canonical CBOR envelope** carrying sender DID, recipient pseudonym, auth mode, privacy tier, cipher suite, [BLAKE3][blake3] content ID, pad bucket, and optional proof-envelope reference.
+* An **MLS-encrypted payload** containing the [Marque Block Spec](../spec/protocol/06-content.md) document (the typed content).
+* An optional [**ProofEnvelope**](../spec/protocol/07-legal-proof.md) retrieved out-of-band, carrying the tiered non-repudiation artifact (signatures, timestamps, Bitcoin anchor, optional QTSP qualified certificate).
 
 Three actors: the **sender's client**, the **recipient's client**, and any number of **providers** acting as opaque relay mailboxes. A fourth role, **notary**, co-signs proof envelopes at the Attested and Qualified tiers. Providers and notaries are frequently the same entity in deployment but are architecturally distinct.
 
@@ -66,6 +69,9 @@ Because every protocol replacement at the internet scale does. HTTPS took ten ye
 
 ## Honest about costs
 
+> [!CAUTION]
+> This is a **10–20 year standards proposal**, not a startup launch. The MVP requires two unaffiliated interoperable implementations, a conformance test suite, an operational SMTP bridge, and at minimum one QTSP partnership for Qualified-tier operation. Read this section before forming expectations about timeline, scope, or commercial readiness.
+
 The honest tradeoffs of the design, in one place:
 
 * **Marque is a 10–20 year transition, not a product launch.** There is no "flag day" when SMTP goes dark. The bridge is load-bearing for at least the first decade.
@@ -80,7 +86,7 @@ The honest tradeoffs of the design, in one place:
 
 **Not a cryptocurrency.** No per-message gas, no wallet requirement, no token economics. Refundable bonds use existing fiat rails (USD / EUR / GBP) with an optional BTC mode.
 
-**Not a chat app.** Marque is async-first. Real-time chat remains better served by Signal, Matrix, or SimpleX. The MLS substrate is shared with those systems but the addressing model (persistent DIDs, not per-session Signal numbers) and the async-delivery extensions (KeyPackage pools, epoch checkpoints for long-offline peers, delivery via dumb encrypted mailbox rather than push notification) are specific to Marque's use case.
+**Not a chat app.** Marque is async-first. Real-time chat remains better served by [Signal](https://signal.org), [Matrix](https://matrix.org), or [SimpleX][simplex]. The MLS substrate is shared with those systems but the addressing model (persistent DIDs, not per-session Signal numbers) and the async-delivery extensions ([KeyPackage][mls] pools, epoch checkpoints for long-offline peers, delivery via dumb encrypted mailbox rather than push notification) are specific to Marque's use case.
 
 **Not a client specification.** Marque specifies wire format, identity, envelope, content blocks, and the minimum rendering conformance. Client UX beyond that — how inboxes are laid out, how threads are visualized, how the Registered chip is rendered — is out of scope. Conformance is measured at the wire, not at the pixel.
 
@@ -148,3 +154,19 @@ What we need, in order:
 ---
 
 *This whitepaper accompanies the Marque founding specification. Normative text lives in [`spec/`](../spec/); Internet-Draft text lives in [`drafts/`](../drafts/); this document is a non-normative executive summary.*
+
+[did]: https://www.w3.org/TR/did-core/
+[mls]: https://datatracker.ietf.org/doc/html/rfc9420
+[mlkem]: https://csrc.nist.gov/pubs/fips/203/final
+[mldsa]: https://csrc.nist.gov/pubs/fips/204/final
+[hybrid-kem]: https://datatracker.ietf.org/doc/draft-ietf-tls-hybrid-design/
+[rfc7748]: https://datatracker.ietf.org/doc/html/rfc7748
+[rfc8032]: https://datatracker.ietf.org/doc/html/rfc8032
+[keri]: https://arxiv.org/abs/1907.02143
+[eidas]: https://eur-lex.europa.eu/eli/reg/2024/1183/oj
+[ots]: https://opentimestamps.org
+[rfc3161]: https://datatracker.ietf.org/doc/html/rfc3161
+[cades]: https://www.etsi.org/deliver/etsi_en/319100_319199/31912201/
+[frost]: https://datatracker.ietf.org/doc/rfc9591/
+[blake3]: https://github.com/BLAKE3-team/BLAKE3
+[simplex]: https://simplex.chat

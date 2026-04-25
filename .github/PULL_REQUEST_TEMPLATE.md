@@ -37,7 +37,7 @@ _If this PR modifies normative spec text, describe the impact on existing implem
 - [ ] If normative: the MIP is merged (at least in Draft status) and references this PR.
 - [ ] Schemas and examples are updated in sync with any spec change.
 - [ ] I have not used `--force` push after reviewers have engaged.
-- [ ] Commit messages follow `<area>: <imperative summary>`.
+- [ ] Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) (see [CONTRIBUTING §Conventional Commits](../CONTRIBUTING.md#conventional-commits)).
 
 ## For reviewers
 
