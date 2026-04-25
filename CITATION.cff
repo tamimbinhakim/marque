@@ -1,0 +1,49 @@
+cff-version: 1.2.0
+message: "If you cite this specification in academic, regulatory, or industrial work, please use the following metadata."
+type: software
+title: "Marque — a protocol for human correspondence in the age of AI"
+abstract: >
+  Marque is a cryptographically signed, federated messaging protocol
+  proposed as the successor to SMTP and IMAP. It treats identity as a
+  portable cryptographic object, encrypts content end-to-end by default
+  with MLS (RFC 9420), produces eIDAS 2.0 QERDS-compliant legal proof as
+  a tiered option, and bridges bidirectionally to legacy email throughout
+  a ten- to twenty-year transition.
+authors:
+  - given-names: Tamim
+    family-names: Bin Hakim
+    email: [redacted]
+    affiliation: Independent
+repository-code: "https://github.com/tamimbinhakim/marque"
+url: "https://github.com/tamimbinhakim/marque"
+license: Apache-2.0
+keywords:
+  - email
+  - email-successor
+  - messaging-protocol
+  - ietf
+  - did
+  - did-mail
+  - mls
+  - rfc-9420
+  - eidas
+  - qerds
+  - end-to-end-encryption
+  - portable-identity
+  - keri
+  - opentimestamps
+  - protocol-specification
+date-released: "2026-04-25"
+version: "v0-founding"
+identifiers:
+  - type: other
+    value: "MARQUE-FOUNDING"
+    description: "Citation key for the founding specification (see docs/whitepaper.md §References)."
+notes: >
+  Dual-licensed: specification text under CC-BY 4.0 (LICENSE-SPEC),
+  reference code and schemas under Apache-2.0 (LICENSE). The specification
+  was researched and written by the author in collaboration with Claude
+  (Anthropic) as research partner, drafter, and reviewer. Sole
+  responsibility for every normative requirement and regulatory citation
+  remains with the author. See README "Authorship and AI collaboration"
+  for detail.
