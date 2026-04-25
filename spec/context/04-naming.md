@@ -1,6 +1,6 @@
 # Naming
 
-> Why _Marque_, what it means, and why the tagline is _"Registered communication, by default."_
+> Why _Marque_, what it means, and why the tagline is _"A protocol for human correspondence in the age of AI."_
 
 **You will learn**
 
@@ -49,20 +49,22 @@ Why not coin a unit noun? Because English has an unavoidable homophone collision
 
 ## 4. The tagline
 
-**"Registered communication, by default."**
+**"A protocol for human correspondence in the age of AI."**
 
 Three layers:
 
-1. **Registered** as legally-proof — direct QERDS / PEC nod.
-2. **Registered** as DID-registered identity — portable, sovereign.
-3. **By default** — E2EE and cryptographic proof are baseline, not premium. The anti-Skiff positioning.
+1. **Protocol** — Marque is a wire-format specification on the IETF Standards Track, not a product, a brand, or a vendor. The word signals neutrality and the expected destination (an RFC, not a SaaS).
+2. **Human correspondence** — the wedge. Marque is for people writing to people, not for AI-to-AI inbox flooding, AI-mediated platform conversations, or LLM-generated phishing. Verified identity, MLS encryption, and tiered legal proof all serve that one definition.
+3. **In the age of AI** — names the historical moment that makes the patch path no longer credible: zero-click prompt-injection ([CVE-2025-32711][echoleak]), LLM-generated phishing past the content-filter ceiling, and AI-assistant inboxes that cannot structurally distinguish instructions from data. SMTP has no answer to any of these.
 
 Localizes cleanly:
 
-- French: _Communication enregistrée par défaut._
-- Italian: _Comunicazione raccomandata per impostazione predefinita._
-- German: _Eingeschriebene Kommunikation, standardmäßig._
-- Spanish: _Comunicación certificada, por defecto._
+- French: _Un protocole pour la correspondance humaine à l'ère de l'IA._
+- Italian: _Un protocollo per la corrispondenza umana nell'era dell'IA._
+- German: _Ein Protokoll für menschliche Korrespondenz im Zeitalter der KI._
+- Spanish: _Un protocolo para la correspondencia humana en la era de la IA._
+
+[echoleak]: https://nvd.nist.gov/vuln/detail/CVE-2025-32711
 
 ## 5. Protecting the mark
 

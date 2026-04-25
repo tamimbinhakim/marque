@@ -51,7 +51,7 @@ Every message carries an **auth-mode** choice. The auth-mode determines which ch
 | `SIGNED` | **Signed** | pen / signature | ERDS (Art. 43). |
 | `QUALIFIED` | **Registered** | blue scales | QERDS (Art. 44). |
 
-**Registered** is the user-visible label for the qualified tier. It is the anchor of the product tagline *"Registered communication, by default"* — meaning that registered-grade proof is available as a default option, not that every message is Qualified.
+**Registered** is the user-visible label for the qualified tier. Registered-grade proof is available to any user as a per-message option; not every message is Qualified.
 
 ## 5. Bridge and interop chips
 

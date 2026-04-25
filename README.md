@@ -1,6 +1,6 @@
 # Marque
 
-> **Registered communication, by default.**
+> **A protocol for human correspondence in the age of AI.**
 
 **Marque** is a cryptographically signed, federated messaging protocol proposed as the successor to SMTP and IMAP. It replaces email over a 10–20 year transition while bridging bidirectionally to legacy mail from day one — so no correspondent is ever left behind.
 
@@ -18,11 +18,11 @@ Start at [`spec/00-overview.md`](./spec/00-overview.md) — ten minutes, three r
 
 | Audience                       | Reading path                                                                                                                           | Time       |
 | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
-| **Executive / funder**         | [`docs/whitepaper.md`](./docs/whitepaper.md)                                                                                           | 15 minutes |
-| **Product person**             | `overview/01`, `02`, `03`, `04`                                                                                                        | 30 minutes |
-| **Implementer**                | `overview/02`, then [`overview/05`](./spec/overview/05-mvp.md) for the implementation-sequencing plan, then `protocol/01–10` in order  | 4 hours    |
-| **IETF reviewer**              | [`drafts/draft-tamim-marque-arch-00`](./drafts/draft-tamim-marque-arch-00.md), then `protocol/02`, `03`, `05`, `07`, then `context/05` | 2 hours    |
-| **QTSP / trust-list operator** | [`docs/compliance/eidas-mapping.md`](./docs/compliance/eidas-mapping.md), then `protocol/07-legal-proof.md`                            | 1 hour     |
+| **Executive / funder**         | [`docs/whitepaper.md`](./docs/whitepaper.md)                                                                                                                                                                                                                                                                                                                                                                                | 15 minutes |
+| **Product person**             | [`overview/01`](./spec/overview/01-what-marque-replaces.md), [`02`](./spec/overview/02-what-marque-is.md), [`03`](./spec/overview/03-how-it-feels.md), [`04`](./spec/overview/04-when-to-adopt.md)                                                                                                                                                                                                                           | 30 minutes |
+| **Implementer**                | [`overview/02`](./spec/overview/02-what-marque-is.md), then [`overview/05`](./spec/overview/05-mvp.md) for the implementation-sequencing plan, then [`protocol/01`](./spec/protocol/01-terminology.md)–[`10`](./spec/protocol/10-conformance.md) in order                                                                                                                                                                    | 4 hours    |
+| **IETF reviewer**              | [`drafts/draft-tamim-marque-arch-00`](./drafts/draft-tamim-marque-arch-00.md), then [`protocol/02`](./spec/protocol/02-identity.md), [`03`](./spec/protocol/03-architecture.md), [`05`](./spec/protocol/05-cryptography.md), [`07`](./spec/protocol/07-legal-proof.md), then [`context/05`](./spec/context/05-risks.md)                                                                                                      | 2 hours    |
+| **QTSP / trust-list operator** | [`docs/compliance/eidas-mapping.md`](./docs/compliance/eidas-mapping.md), then [`protocol/07-legal-proof.md`](./spec/protocol/07-legal-proof.md)                                                                                                                                                                                                                                                                            | 1 hour     |
 
 The specification is organized in three tracks:
 

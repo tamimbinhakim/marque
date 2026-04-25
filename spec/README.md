@@ -1,6 +1,6 @@
 # Marque specification
 
-> **Registered communication, by default.**
+> **A protocol for human correspondence in the age of AI.**
 
 Pre-RFC founding specification. Target track: IETF Standards Track with ETSI ESI and W3C DID WG liaisons. Companion to the _Mailroom_ AI-native MTA specification (Documents 1–2 of this series).
 
