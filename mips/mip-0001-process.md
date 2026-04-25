@@ -1,7 +1,7 @@
 ---
 mip: 0001
 title: "MIP process"
-author: "Tamim Bin Hakim <[redacted]>"
+author: "Tamim Bin Hakim (https://github.com/tamimbinhakim)"
 discussions-to: "https://github.com/tamimbinhakim/marque/discussions"
 status: Active
 category: Process

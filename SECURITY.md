@@ -45,12 +45,12 @@ Out of scope (report directly to the vendor):
 ## How to report
 
 > [!NOTE]
-> **Pre-charter contact:** the `marqueproto.org` domain and the `marque-protocol` GitHub organization are reserved names that do not exist yet. Until they're established, send security reports to **`[redacted]`**. The encrypted channel below describes the post-charter destination and is for forward reference only.
+> **Pre-charter contact:** the `marqueproto.org` domain and the `marque-protocol` GitHub organization are reserved names that do not exist yet. Until they're established, **report vulnerabilities through GitHub's Private Vulnerability Reporting**: open a [new security advisory](https://github.com/tamimbinhakim/marque/security/advisories/new) on this repository. GitHub routes the report privately to the maintainer; no public issue is created. The encrypted email channel below describes the post-charter destination and is for forward reference only.
 
-**Use email, encrypted.**
+**Use GitHub PVR pre-charter; encrypted email post-charter.**
 
 ```
-Now (pre-charter):  [redacted]
+Now (pre-charter):  https://github.com/tamimbinhakim/marque/security/advisories/new
 Future:             security@marqueproto.org
 PGP key:            https://marqueproto.org/.well-known/pgp-key.asc       (reserved)
 DID:                did:mail:marqueproto.org:security   (once Marque is self-hosting)

@@ -12,8 +12,8 @@ abstract: >
 authors:
   - given-names: Tamim
     family-names: Bin Hakim
-    email: [redacted]
     affiliation: Independent
+    website: "https://github.com/tamimbinhakim"
 repository-code: "https://github.com/tamimbinhakim/marque"
 url: "https://github.com/tamimbinhakim/marque"
 license: Apache-2.0

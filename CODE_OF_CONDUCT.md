@@ -24,7 +24,7 @@ Participation in this project is a privilege extended on the basis that particip
 ## Enforcement
 
 > [!NOTE]
-> **Pre-charter contact:** `conduct@marqueproto.org` is a reserved address that does not exist yet. Until it's live, send conduct reports to **`[redacted]`** — the founding editor receives them and (where the report concerns the founding editor) will route to a neutral reviewer.
+> **Pre-charter contact:** `conduct@marqueproto.org` is a reserved address that does not exist yet. Until it's live, conduct reports may be raised by opening a [private GitHub Security Advisory](https://github.com/tamimbinhakim/marque/security/advisories/new) on this repository — GitHub's PVR channel doubles as a private maintainer-contact channel pre-charter. Where the report concerns the founding editor, indicate that in the report; the editor will route to a neutral reviewer.
 
 Violations should be reported to `conduct@marqueproto.org`. Reports are handled by a three-person Conduct Committee drawn from the editors plus one independent member, with a rotating chair. Decisions are made by simple majority. The subject of a report is notified and given 14 days to respond before any public action is taken, except in cases of ongoing harassment where a temporary measure may be issued immediately.
 

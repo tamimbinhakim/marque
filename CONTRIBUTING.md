@@ -161,7 +161,7 @@ Install `git-cliff` once per developer with `brew install git-cliff` (macOS), `c
 
 ## Code of conduct
 
-All participation is governed by [`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md). Pre-charter, send conduct reports to `[redacted]`; once `marqueproto.org` is established, reports route to `conduct@marqueproto.org` (see [`CODE_OF_CONDUCT.md` § Enforcement](./CODE_OF_CONDUCT.md#enforcement)).
+All participation is governed by [`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md). See [`CODE_OF_CONDUCT.md` § Enforcement](./CODE_OF_CONDUCT.md#enforcement) for how to report a violation pre-charter (private GitHub Security Advisory) and post-charter (`conduct@marqueproto.org`).
 
 ## Attribution
 
