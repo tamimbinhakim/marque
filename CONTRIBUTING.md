@@ -5,7 +5,7 @@ Thank you for considering a contribution. Marque is a pre-RFC protocol specifica
 ## Ground rules
 
 > [!WARNING]
-> **No scope creep.** Marque is the wire protocol, identity model, envelope, block spec, legal-proof semantics, and SMTP bridge. Client UX, provider business logic, AI features, and MTA internals belong downstream — to [Mailroom](https://github.com/marque-protocol/mailroom) or to any other implementation. PRs that pull product surface into the spec will be closed.
+> **No scope creep.** Marque is the wire protocol, identity model, envelope, block spec, legal-proof semantics, and SMTP bridge. Client UX, provider business logic, AI features, and MTA internals belong downstream — to _Mailroom_ (the companion AI-native MTA proposal, repository forthcoming) or to any other implementation. PRs that pull product surface into the spec will be closed.
 
 1. **Read [`GOVERNANCE.md`](./GOVERNANCE.md) first.** It explains who decides what and how.
 2. **Be specific.** "I don't like this" is not a contribution. "Section 5.3 mandates MLS but does not specify a post-quantum ciphersuite codepoint; proposal: allocate `0xMarque0001` for `X25519MLKEM768+Ed25519+ML-DSA-65`" is.
@@ -161,7 +161,7 @@ Install `git-cliff` once per developer with `brew install git-cliff` (macOS), `c
 
 ## Code of conduct
 
-All participation is governed by [`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md). Violations should be reported to `conduct@marqueproto.org`.
+All participation is governed by [`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md). Pre-charter, send conduct reports to `[redacted]`; once `marqueproto.org` is established, reports route to `conduct@marqueproto.org` (see [`CODE_OF_CONDUCT.md` § Enforcement](./CODE_OF_CONDUCT.md#enforcement)).
 
 ## Attribution
 

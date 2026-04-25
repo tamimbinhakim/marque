@@ -9,6 +9,9 @@ Marque treats identity as a portable [W3C DID][did] the user owns, not an addres
 > [!NOTE]
 > **Status — pre-RFC founding specification.** Target track: IETF Standards Track with ETSI ESI and W3C DID WG liaisons. Target IETF submission: Q3 2026. Spec v1.0 target: 2028. Expect frequent updates until the first WG draft. The repository [CHANGELOG](./CHANGELOG.md) tracks every revision.
 
+> [!IMPORTANT]
+> **Reserved names — none of this exists yet.** During the pre-charter phase, every reference in this repository to the `marqueproto.org` domain, the `marque-protocol` GitHub organization, the `editors@`/`security@`/`conduct@marqueproto.org` mailboxes, the `marque-discuss` mailing list, and the **Internet Mail Identity Foundation (IMIF)** describes the **proposed end-state**, not a current entity. None of those names is registered, hosted, or resolvable. JSON-Schema `$id` and JSON-LD `@context` URIs under `marqueproto.org` are stable identifier URIs by design and do not need to resolve. Until the names are established, real correspondence — security reports, conduct reports, editor questions — should go to **`[redacted]`**.
+
 > [!TIP]
 > If any acronym below (KERI, QERDS, FROST, ML-DSA, OTS, …) is unfamiliar, the [glossary and citation hub](./docs/glossary.md) defines every term with a one-line meaning and a link to the authoritative source.
 

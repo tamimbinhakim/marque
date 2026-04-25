@@ -1,8 +1,8 @@
 ---
 mip: 0001
 title: "MIP process"
-author: "The Marque Editors <editors@marqueproto.org>"
-discussions-to: "https://github.com/marque-protocol/marque/discussions/1"
+author: "Tamim Bin Hakim <[redacted]>"
+discussions-to: "https://github.com/tamimbinhakim/marque/discussions"
 status: Active
 category: Process
 created: 2026-04-01

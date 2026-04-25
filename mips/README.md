@@ -57,7 +57,7 @@ Numbers are never reused.
 
 ## Writing a MIP
 
-1. Search [open](https://github.com/marque-protocol/marque/pulls?q=is%3Apr+label%3Amip) and [merged](https://github.com/marque-protocol/marque/pulls?q=is%3Amerged+label%3Amip) MIP PRs to confirm your idea is not already in flight.
+1. Search [open](https://github.com/tamimbinhakim/marque/pulls?q=is%3Apr+label%3Amip) and [merged](https://github.com/tamimbinhakim/marque/pulls?q=is%3Amerged+label%3Amip) MIP PRs to confirm your idea is not already in flight.
 2. Open a discussion or issue to socialize the idea. This step is RECOMMENDED but not required for MIPs in the _Content_ and _Informational_ categories.
 3. Copy [`mip-template.md`](./mip-template.md) to `mip-XXXX-short-title.md` using the next unallocated number.
 4. Fill in every section. `Not applicable` is a valid answer but must be explicit.
