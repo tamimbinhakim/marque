@@ -1,27 +1,39 @@
 # Marque repository CODEOWNERS
 #
-# Listed users/teams are automatically requested for review when a PR touches
-# the matching paths. CODEOWNERS is advisory — merge rules live in
-# GOVERNANCE.md, not here.
+# Listed owners are automatically requested for review when a PR touches the
+# matching paths. CODEOWNERS is advisory — merge rules live in GOVERNANCE.md,
+# not here.
+#
+# Current state: the repository is hosted under a personal account during the
+# pre-charter phase. All paths are owned by the founding editor. When the
+# `marque-protocol` GitHub organization is established (per GOVERNANCE.md),
+# this file will switch to the team-based ownership shown in the comments
+# alongside each block.
 
 # Spec text — full editor team
-/spec/            @marque-protocol/editors
-/drafts/          @marque-protocol/editors
+# future: @marque-protocol/editors
+/spec/            @tamimbinhakim
+/drafts/          @tamimbinhakim
 
 # MIPs — full editor team (no single editor can self-approve)
-/mips/            @marque-protocol/editors
+# future: @marque-protocol/editors
+/mips/            @tamimbinhakim
 
 # Governance / process — editor-in-chief plus full team
-/GOVERNANCE.md    @marque-protocol/editors
-/CONTRIBUTING.md  @marque-protocol/editors
-/SECURITY.md      @marque-protocol/editors
+# future: @marque-protocol/editors
+/GOVERNANCE.md    @tamimbinhakim
+/CONTRIBUTING.md  @tamimbinhakim
+/SECURITY.md      @tamimbinhakim
 
 # Schemas and examples — editors plus schema-wg sub-team
-/schemas/         @marque-protocol/editors @marque-protocol/schema-wg
-/examples/        @marque-protocol/editors @marque-protocol/schema-wg
+# future: @marque-protocol/editors @marque-protocol/schema-wg
+/schemas/         @tamimbinhakim
+/examples/        @tamimbinhakim
 
 # CI config
-/.github/         @marque-protocol/editors
+# future: @marque-protocol/editors
+/.github/         @tamimbinhakim
 
 # Docs — anyone on the editors team can review
-/docs/            @marque-protocol/editors
+# future: @marque-protocol/editors
+/docs/            @tamimbinhakim
