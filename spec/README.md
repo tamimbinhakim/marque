@@ -6,8 +6,6 @@ Pre-RFC founding specification. Target track: IETF Standards Track with ETSI ESI
 
 Start at [`00-overview.md`](./00-overview.md) — ten-minute product overview with three audience-specific reading paths.
 
----
-
 ## Structure
 
 ```

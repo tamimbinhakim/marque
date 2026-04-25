@@ -5,8 +5,6 @@
 > [!TIP]
 > Acronyms not unpacked here (MLS, KERI, QERDS, FROST, OTS, …) are defined in the [glossary and citation hub](./glossary.md).
 
----
-
 ## General
 
 <details>
@@ -36,8 +34,6 @@
 **Spec v1.0 target: 2028.** First commercial deployments 2028–2029. [eIDAS QERDS][eidas] listing 2029–2030. Phase-4 majority-of-new-signups tipping point 2033–2036. Honesty about timelines is baked into the proposal; HTTPS took 10 years with Google's backing, IPv6 is at 28 and still half-done. See [`spec/context/03-migration.md`](../spec/context/03-migration.md).
 
 </details>
-
----
 
 ## Identity
 
@@ -95,8 +91,6 @@ A provider shutting down MUST announce 90 days in advance and maintain export ca
 
 </details>
 
----
-
 ## Cryptography
 
 <details>
@@ -125,8 +119,6 @@ For the protocol itself, see [RFC 9420][mls].
 Yes, per-message. The [`auth_mode`](../spec/protocol/01-terminology.md#6-technical-terms) flag chooses [`CASUAL`](../spec/protocol/01-terminology.md#4-tier-chips) (deniable MAC), [`SIGNED`](../spec/protocol/01-terminology.md#4-tier-chips) (non-repudiable, **Signed** chip), or [`QUALIFIED`](../spec/protocol/01-terminology.md#4-tier-chips) ([eIDAS][eidas] qualified signature, **Registered** chip). The same thread MAY mix modes. See [`spec/protocol/05-cryptography.md §5.3`](../spec/protocol/05-cryptography.md#53-deniability-versus-non-repudiation).
 
 </details>
-
----
 
 ## Legal proof
 
@@ -157,8 +149,6 @@ Tier-dependent. Off for **Casual**, opt-in for **Signed**, REQUIRED for **Regist
 [PEC][pec] is the existence proof that mass-scale legal-tier mail works: [~16 M accounts, mandatory for Italian businesses, ~2.5 B messages/year][agid], consistent Court of Cassation recognition. **It works because regulation mandated it.** See [`spec/protocol/07-legal-proof.md §7.1`](../spec/protocol/07-legal-proof.md#71-the-empirical-record).
 
 </details>
-
----
 
 ## Content
 
@@ -196,8 +186,6 @@ See [`spec/protocol/06-content.md §6.6`](../spec/protocol/06-content.md#66-forw
 
 </details>
 
----
-
 ## Anti-spam
 
 <details>
@@ -230,8 +218,6 @@ You can contest via a 14-day appeal window. The recipient's provider issues a co
 
 </details>
 
----
-
 ## Migration
 
 <details>
@@ -260,8 +246,6 @@ See [`spec/overview/04-when-to-adopt.md`](../spec/overview/04-when-to-adopt.md).
 
 </details>
 
----
-
 ## Storage and archive
 
 <details>
@@ -285,8 +269,6 @@ Devices exchange [HPKE][hpke]-encrypted cache deltas via the home provider's `de
 
 </details>
 
----
-
 ## Rooms — shared mailboxes, teams, lists
 
 <details>
@@ -309,8 +291,6 @@ Yes, via **delegation**. The delegation has a bounded scope (`read_only`, `triag
 A `list`-kind Room. Owner (or moderator threshold) sends broadcast; subscribers receive. Rolling-epoch relaxation keeps MLS operational cost bounded at scale. One-click unsubscribe per [RFC 8058](https://datatracker.ietf.org/doc/html/rfc8058). See [`spec/protocol/04-rooms.md §4.7`](../spec/protocol/04-rooms.md#47-mailing-lists-list-kind).
 
 </details>
-
----
 
 ## Process and governance
 
@@ -337,8 +317,6 @@ Write a MIP. See [MIP-0001](../mips/mip-0001-process.md) for the process and [`m
 - Run the conformance self-test matrix against any deployed Marque stack.
 
 </details>
-
----
 
 ## Relationship to other systems
 

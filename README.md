@@ -12,8 +12,6 @@ Marque treats identity as a portable [W3C DID][did] the user owns, not an addres
 > [!TIP]
 > If any acronym below (KERI, QERDS, FROST, ML-DSA, OTS, …) is unfamiliar, the [glossary and citation hub](./docs/glossary.md) defines every term with a one-line meaning and a link to the authoritative source.
 
----
-
 ## Read the spec
 
 Start at [`spec/00-overview.md`](./spec/00-overview.md) — ten minutes, three reading paths.
@@ -36,8 +34,6 @@ spec/
 └── context/                    Blockchain scope, commerce, migration, naming, risks, related work
 ```
 
----
-
 ## Core commitments
 
 | Commitment                | What Marque commits to                                                                                                                                                                                  |
@@ -52,8 +48,6 @@ spec/
 | **SMTP interop**          | Bidirectional [SMTP bridge](./spec/protocol/09-interop.md), opportunistic, clearly labeled, for 10–20 years. See [`smtp-bridge.mmd`](./docs/diagrams/smtp-bridge.mmd).                                  |
 
 Marque is a composition of components that work in production today — [Bluesky AT][atproto], [MLS][mls], [Sigstore][rekor], [OpenTimestamps][ots], [PEC][pec], [Hyperswarm][hyperswarm], [SimpleX][simplex], [MIMI][mimi], [FROST][frost], [Argon2id][argon2], [BLAKE3][blake3], [QUIC][quic] — wrapped in an opinionated architecture with firm red lines against on-chain content, per-message gas, wallet-only identity, single-provider capture, server-owned conversation state, and spec-optional extensions. Every component above is defined and linked in the [glossary and citation hub](./docs/glossary.md).
-
----
 
 ## Repository layout
 
@@ -84,8 +78,6 @@ marque/
 
 All six are rendered inline in [`docs/architecture-overview.md`](./docs/architecture-overview.md) and [MIP-0001](./mips/mip-0001-process.md).
 
----
-
 ## Getting involved
 
 - **Read the [spec overview](./spec/00-overview.md)** first — ten minutes, three audience-specific reading paths.
@@ -95,8 +87,6 @@ All six are rendered inline in [`docs/architecture-overview.md`](./docs/architec
 - **Contribute** per [CONTRIBUTING.md](./CONTRIBUTING.md).
 - **Report a security issue** privately per [SECURITY.md](./SECURITY.md).
 - **Governance** is documented in [GOVERNANCE.md](./GOVERNANCE.md).
-
----
 
 ## Related work
 
@@ -115,15 +105,11 @@ Marque composes from proven systems. Each reference below is a debt we acknowled
 - [BLAKE3][blake3] — content-addressed hashing.
 - [QUIC / RFC 9000][quic] — modern transport.
 
----
-
 ## Companion: Mailroom
 
 The **Mailroom** MTA (Documents 1–2 of this research series) is **an example** AI-native implementation of the provider role. It is not privileged; no implementation in the Marque ecosystem is. Implementers are unrestrained in how they differentiate — AI triage, UX, search, discovery, storage strategy, compliance posture — subject only to passing the conformance suite at the wire. Every implementation that passes the suite is a peer.
 
 Marque defines the wire protocol; Mailroom is one of many expected provider implementations — the **HTTP / nginx** relationship, not **HTTP / Chrome**. A second, third, and Nth provider implementation, each from an unaffiliated group, is explicit charter-level policy.
-
----
 
 ## Authorship and AI collaboration
 
@@ -137,8 +123,6 @@ We credit Claude plainly — in commit `Co-Authored-By:` footers, in Acknowledgm
 - Responsibility for every normative MUST and every regulatory citation remains the author's. Claude is acknowledged; Claude is not a co-editor of record.
 
 This convention is open to contributors who prefer to work without AI assistance and to those who prefer to credit their AI collaborator similarly. Either way, the `Co-Authored-By:` footer is the place to say so.
-
----
 
 ## License
 

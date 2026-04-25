@@ -2,8 +2,6 @@
 
 > Concrete milestones this repository tracks, organized against the five-phase migration strategy in [`spec/context/03-migration.md`](../spec/context/03-migration.md). Amended by Process-category MIPs; never by commit without a MIP.
 
----
-
 ## Phase 1 — Foundation (Year 0–2)
 
 **Goal:** A stable wire format and at least two independent, unaffiliated provider implementations that a self-hoster can actually run against Gmail without losing correspondence.
@@ -43,8 +41,6 @@
 
 **Target adoption: 5 000–10 000 active DIDs.**
 
----
-
 ## Phase 2 — First commercial providers (Year 2–3)
 
 **Goal:** At least two unaffiliated privacy-first incumbents shipping opt-in Marque support; one QTSP running QERDS-mode Marque in Italy.
@@ -67,8 +63,6 @@
 
 **Target adoption: 500K–2M DIDs.**
 
----
-
 ## Phase 3 — Regulatory recognition and enterprise (Year 3–5)
 
 **Goal:** eIDAS QERDS listing in multiple jurisdictions; Fortune 500 compliance adoption displaces DocuSign-plus-email stacks.
@@ -85,8 +79,6 @@
 - [ ] Confidential-compute AI-assistant inbox (on-device or regulated TEE) at parity with Copilot/Gemini.
 
 **Target adoption: 10M–50M DIDs.**
-
----
 
 ## Phase 4 — Majority of new signups (Year 5–10)
 
@@ -106,8 +98,6 @@
 
 **Target adoption: 100M–500M DIDs.**
 
----
-
 ## Phase 5 — Equilibrium (Year 10–20)
 
 **Goal:** SMTP receive-only for major providers; Marque is the default for human correspondence.
@@ -117,8 +107,6 @@
 - [ ] Major providers announce SMTP receive-only (or inbound-only) plans.
 - [ ] Possible regulatory mandates for QERDS-equivalent delivery in tax, legal, medical contexts.
 - [ ] SMTP becomes the Ethernet-over-copper of messaging — ubiquitous for M2M, unfashionable for humans.
-
----
 
 ## Cross-phase work
 
@@ -142,8 +130,6 @@
 - Annual Marque conference (co-located with IETF or FOSDEM).
 - Funded migration tooling for existing email archives.
 - Public-good QTSP for individuals who cannot afford commercial qualified certificates.
-
----
 
 ## Accelerants we're watching
 

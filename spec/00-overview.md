@@ -7,8 +7,6 @@ This document is the shortest honest description of Marque. It exists so a reade
 > [!TIP]
 > Unfamiliar acronym? Every term in this document — KERI, MLS, ERDS, QERDS, FROST, OpenTimestamps, ML-DSA, RFC 3161, CAdES — has a one-line definition and an authoritative-source link in the [glossary](../docs/glossary.md).
 
----
-
 ## In one paragraph
 
 Marque treats identity as a portable cryptographic object the user owns, not an address the provider rents. It encrypts message content end-to-end by default using [MLS (RFC 9420)][mls], produces [eIDAS 2.0 QERDS][eidas]-compliant legal proof as a tiered option, replaces HTML's frozen 2005 subset with a typed and signed block format, and anchors non-repudiable timestamps in Bitcoin via [OpenTimestamps][ots] at zero marginal cost — while keeping message content, routing, and identity entirely off-chain. Providers become commodity relays that compete on service quality, compliance, and storage, not on owning the user's address.

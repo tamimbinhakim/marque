@@ -4,8 +4,6 @@
 >
 > If you ever encounter a Marque term you do not recognise, this page should resolve it in one click.
 
----
-
 ## Cryptography and key management
 
 | Term | One-line meaning | Learn more |
@@ -79,8 +77,6 @@
 | **MBS** | Marque Block Spec — the typed, signed, schema-validated content format that replaces HTML in Marque messages. | [`spec/protocol/06-content.md`](../spec/protocol/06-content.md) |
 | **MIP** | Marque Improvement Proposal — the unit of normative change in this repository. | [MIP-0001](../mips/mip-0001-process.md) |
 | **`.marquebox`** | Portable archive-export ZIP container; satisfies GDPR data-portability obligations. | [`protocol/03 §3.10`](../spec/protocol/03-architecture.md) |
-
----
 
 ## Marque-internal terminology
 
