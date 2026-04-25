@@ -1,6 +1,10 @@
 %% Marque — delivery paths
 %% Three paths a message may take from Alice to Bob.
 %% Used in docs/architecture-overview.md §2.
+%%
+%% Rendering note: uses Mermaid's default theme with no hardcoded colors,
+%% so GitHub's light/dark auto-theming applies. Section grouping is done
+%% with full-width "Note over A,B" dividers instead of colored rects.
 
 sequenceDiagram
     autonumber
@@ -14,25 +18,19 @@ sequenceDiagram
     A->>R: Resolve did:mail:example.com:bob
     R-->>A: DID doc — service endpoints + KeyPackages
 
-    rect rgba(79, 70, 229, 0.08)
-    note over A,B: (1) Direct P2P — 500 ms budget
+    Note over A,B: ━━━ (1) Direct P2P — 500 ms budget ━━━
     A-)B: Hyperswarm UDP holepunch
     B--)A: If both online and policy permits IP exposure
-    end
 
-    rect rgba(4, 120, 87, 0.08)
-    note over A,B: (2) Store-and-forward via 2-of-3 mailboxes
+    Note over A,B: ━━━ (2) Store-and-forward via 2-of-3 mailboxes ━━━
     A->>PB1: Deposit (ciphertext envelope)
     A->>PB2: Deposit (ciphertext envelope)
     Note over PB1,PB2: Providers store opaque blobs. No content access.
     B->>PB1: Pull when online
     PB1-->>B: Envelope
-    end
 
-    rect rgba(180, 83, 9, 0.08)
-    note over A,B: (3) Metadata-sensitive path — Mixed tier
+    Note over A,B: ━━━ (3) Metadata-sensitive path — Mixed tier ━━━
     A->>NYM: Sphinx-wrapped envelope
     NYM->>PB1: Relay (10–30 s per hop)
     B->>PB1: Pull
     PB1-->>B: Envelope
-    end

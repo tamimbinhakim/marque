@@ -18,20 +18,14 @@ flowchart TB
     EPOCH["<b>MLS ratchet keys</b><br/>— per-epoch, ephemeral —<br/>forward-secret message encryption"]
 
     DID -->|lists service endpoints,<br/>verificationMethods, x-marque| IRK
-    IRK -->|signs rotations| KEL
+    IRK ==>|signs rotations| KEL
     IRK -->|signs DSK certificate| DSK1
     IRK -->|signs DSK certificate| DSK2
     DSK1 -->|joins MLS group,<br/>signs per-epoch commits| EPOCH
     DSK2 -->|joins MLS group,<br/>signs per-epoch commits| EPOCH
 
-    classDef root fill:#eef2ff,stroke:#4f46e5,stroke-width:2px;
-    classDef device fill:#fef3c7,stroke:#b45309,stroke-width:1px;
-    classDef epoch fill:#ecfdf5,stroke:#047857,stroke-width:1px;
-    class IRK root
-    class KEL root
-    class DSK1 device
-    class DSK2 device
-    class EPOCH epoch
+    classDef emphasized stroke-width:3px;
+    class IRK,KEL emphasized
 ```
 
 _Source: [`diagrams/identity-stack.mmd`](./diagrams/identity-stack.mmd)._
@@ -67,28 +61,22 @@ sequenceDiagram
     A->>R: Resolve did:mail:example.com:bob
     R-->>A: DID doc — service endpoints + KeyPackages
 
-    rect rgba(79, 70, 229, 0.08)
-    note over A,B: (1) Direct P2P — 500 ms budget
+    Note over A,B: ━━━ (1) Direct P2P — 500 ms budget ━━━
     A-)B: Hyperswarm UDP holepunch
     B--)A: If both online and policy permits IP exposure
-    end
 
-    rect rgba(4, 120, 87, 0.08)
-    note over A,B: (2) Store-and-forward via 2-of-3 mailboxes
+    Note over A,B: ━━━ (2) Store-and-forward via 2-of-3 mailboxes ━━━
     A->>PB1: Deposit (ciphertext envelope)
     A->>PB2: Deposit (ciphertext envelope)
     Note over PB1,PB2: Providers store opaque blobs. No content access.
     B->>PB1: Pull when online
     PB1-->>B: Envelope
-    end
 
-    rect rgba(180, 83, 9, 0.08)
-    note over A,B: (3) Metadata-sensitive path — Mixed tier
+    Note over A,B: ━━━ (3) Metadata-sensitive path — Mixed tier ━━━
     A->>NYM: Sphinx-wrapped envelope
     NYM->>PB1: Relay (10–30 s per hop)
     B->>PB1: Pull
     PB1-->>B: Envelope
-    end
 ```
 
 _Source: [`diagrams/message-path.mmd`](./diagrams/message-path.mmd)._
@@ -152,10 +140,8 @@ flowchart LR
     end
     STORE -. red lines .- NEVER
 
-    classDef never fill:#fef2f2,stroke:#b91c1c,stroke-width:1px,color:#7f1d1d;
-    classDef store fill:#eef2ff,stroke:#4f46e5,stroke-width:2px;
-    class NEVER,N1,N2,N3 never
-    class STORE store
+    classDef emphasized stroke-width:3px;
+    class STORE,NEVER emphasized
 ```
 
 _Source: [`diagrams/provider-role.mmd`](./diagrams/provider-role.mmd)._
@@ -195,16 +181,12 @@ flowchart TB
     M --> H --> S1 --> CC
     CC --> TSA
     TSA --> TL
-    TL --> QC
-    QC --> FR
-    FR --> AT
+    TL ==> QC
+    QC ==> FR
+    FR ==> AT
 
-    classDef casual fill:#f5f5f5,stroke:#737373;
-    classDef signed fill:#eef2ff,stroke:#4f46e5;
-    classDef qualified fill:#ecfdf5,stroke:#047857,stroke-width:2px;
-    class M casual
-    class H,S1,CC,TSA,TL signed
-    class QC,FR,AT qualified
+    classDef emphasized stroke-width:3px;
+    class QC,FR,AT emphasized
 ```
 
 _Source: [`diagrams/proof-envelope.mmd`](./diagrams/proof-envelope.mmd)._
@@ -247,14 +229,8 @@ flowchart LR
     PT --> MB
     MB --> RCPT[["Marque recipient<br/>bob · did:mail:example.com:bob"]]
 
-    classDef legacy fill:#fafaf9,stroke:#78716c;
-    classDef bridge fill:#eef2ff,stroke:#4f46e5,stroke-width:2px;
-    classDef enc fill:#ecfdf5,stroke:#047857;
-    classDef plain fill:#fef3c7,stroke:#b45309;
-    class GM legacy
-    class BR bridge
-    class ENC enc
-    class PT plain
+    classDef emphasized stroke-width:3px;
+    class BR emphasized
 ```
 
 _Source: [`diagrams/smtp-bridge.mmd`](./diagrams/smtp-bridge.mmd)._

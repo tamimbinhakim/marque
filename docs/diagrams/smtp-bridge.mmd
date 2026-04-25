@@ -1,6 +1,10 @@
 %% Marque — SMTP bridge flow
 %% Inbound SMTP → Marque with opportunistic encryption upgrade.
 %% Used in docs/architecture-overview.md §5.
+%%
+%% Rendering note: uses Mermaid's default theme with no hardcoded fill
+%% colors, so GitHub's light/dark auto-theming applies. The Bridge MTA
+%% is emphasized via stroke-width.
 
 flowchart LR
     GM[["Legacy sender<br/>alice@gmail.com"]] -->|SMTP| BR[Bridge MTA]
@@ -23,11 +27,5 @@ flowchart LR
     PT --> MB
     MB --> RCPT[["Marque recipient<br/>bob · did:mail:example.com:bob"]]
 
-    classDef legacy fill:#fafaf9,stroke:#78716c;
-    classDef bridge fill:#eef2ff,stroke:#4f46e5,stroke-width:2px;
-    classDef enc fill:#ecfdf5,stroke:#047857;
-    classDef plain fill:#fef3c7,stroke:#b45309;
-    class GM legacy
-    class BR bridge
-    class ENC enc
-    class PT plain
+    classDef emphasized stroke-width:3px;
+    class BR emphasized
